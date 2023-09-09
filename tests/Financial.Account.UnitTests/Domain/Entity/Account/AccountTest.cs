@@ -32,8 +32,8 @@ public class AccountTest
         Assert.Equal(validData.OpeningBalance, account.OpeningBalance);
         Assert.NotEqual(default(Guid), account.Id);
         Assert.NotEqual(default(DateTime), account.CreatedAt);
-        Assert.True(account.CreatedAt > datetimeBefore);
-        Assert.True(account.CreatedAt < datetimeAfter);
+        Assert.True(account.CreatedAt > datetimeAfter);
+        Assert.True(account.CreatedAt < datetimeBefore);
         Assert.True(account.IsActive);
         Assert.False(account.OpeningBalanceIsNegative);
 
