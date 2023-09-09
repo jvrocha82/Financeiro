@@ -219,6 +219,8 @@ public class AccountTest
         Assert.Equal(newValues.Name, account.Name);
         Assert.Equal(newValues.OpeningBalance, account.OpeningBalance);
     }
+    [Fact(DisplayName = nameof(UpdateOnlyName))]
+    [Trait("Domain", "Account - Aggregates")]
     public void UpdateOnlyName()
     {
         var account = new DomainEntity.Account("Account Name", 0);
