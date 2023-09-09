@@ -26,16 +26,15 @@ public class AccountTest
         var account = new DomainEntity.Account(validData.Name, validData.OpeningBalance);
         var datetimeAfter = DateTime.Now;
         //Assert
-
-        Assert.NotNull(account);
-        Assert.Equal(validData.Name, account.Name);
-        Assert.Equal(validData.OpeningBalance, account.OpeningBalance);
-        Assert.NotEqual(default(Guid), account.Id);
-        Assert.NotEqual(default(DateTime), account.CreatedAt);
-        Assert.True(account.CreatedAt > datetimeBefore);
-        Assert.True(account.CreatedAt < datetimeAfter );
-        Assert.True(account.IsActive);
-        Assert.False(account.OpeningBalanceIsNegative);
+        account.Should().NotBeNull();
+        account.Name.Should().Be(validData.Name);
+        account.OpeningBalance.Should().Be(validData.OpeningBalance);
+        account.Id.Should().NotBeEmpty();
+        account.CreatedAt.Should().NotBeSameDateAs(default(DateTime));
+        account.OpeningBalanceIsNegative.Should().BeFalse();
+        account.CreatedAt.Should().BeAfter(datetimeBefore);
+        account.CreatedAt.Should().BeBefore(datetimeAfter);
+        account.IsActive.Should().BeTrue();
 
     }
     #endregion[InstantiateValidation]
@@ -58,16 +57,15 @@ public class AccountTest
         var account = new DomainEntity.Account(validData.Name, validData.OpeningBalance, isNegative);
         var datetimeAfter = DateTime.Now;
 
-
-        Assert.NotNull(account);
-        Assert.Equal(validData.Name, account.Name);
-        Assert.Equal(validData.OpeningBalance, account.OpeningBalance);
-        Assert.NotEqual(default(Guid), account.Id);
-        Assert.NotEqual(default(DateTime), account.CreatedAt);
-        Assert.True(account.CreatedAt > datetimeBefore);
-        Assert.True(account.CreatedAt < datetimeAfter);
-        Assert.True(account.IsActive);
-        Assert.Equal(isNegative, account.OpeningBalanceIsNegative);
+        account.Should().NotBeNull();
+        account.Name.Should().Be(validData.Name);
+        account.OpeningBalance.Should().Be(validData.OpeningBalance);
+        account.Id.Should().NotBeEmpty();
+        account.CreatedAt.Should().NotBeSameDateAs(default(DateTime));
+        account.CreatedAt.Should().BeAfter(datetimeBefore);
+        account.CreatedAt.Should().BeBefore(datetimeAfter);
+        account.IsActive.Should().BeTrue();
+        account.OpeningBalanceIsNegative.Should().Be(isNegative);
     }
 
 
@@ -111,13 +109,17 @@ public class AccountTest
     [InlineData("")]
     [InlineData(null)]
     [InlineData("    ")]
+    
     public void InstantiateErrorWhenNameIsEmpty(string? name)
     {
         Action action =
             () => new DomainEntity.Account(name!, 0);
-        var exception = Assert.Throws<EntityValidationException>(action);
-        Assert.Equal("Name should not be empty or null", exception.Message);
+        action.Should()
+            .Throw<EntityValidationException>()
+            .WithMessage("Name should not be empty or null");
     }
+
+
     [Theory(DisplayName = nameof(InstantiateErrorWhenNameIsLessThan3Characters))]
     [Trait("Domain", "Account - Aggregates")]
     [InlineData("1")]
@@ -129,8 +131,9 @@ public class AccountTest
     {
         Action action =
             () => new DomainEntity.Account(name!, 0);
-        var exception = Assert.Throws<EntityValidationException>(action);
-        Assert.Equal("Name should be at leats 3 characters long", exception.Message);
+            action.Should()
+                .Throw<EntityValidationException>()
+                .WithMessage("Name should be at leats 3 characters long");
     }
 
     [Fact(DisplayName = nameof(InstantiateErrorWhenNameIsGreaterThan255Characters))]
@@ -140,8 +143,10 @@ public class AccountTest
         var invalidName = String.Join(null, Enumerable.Range(0, 256).Select(_ => "a").ToArray());
         Action action =
             () => new DomainEntity.Account(invalidName, 0);
-        var exception = Assert.Throws<EntityValidationException>(action);
-        Assert.Equal("Name should be less or equal 255 characters long", exception.Message);
+
+        action.Should()
+            .Throw<EntityValidationException>()
+            .WithMessage("Name should be less or equal 255 characters long");
     }
 
     #endregion[NameValidation]
@@ -159,16 +164,16 @@ public class AccountTest
     {
         Action action =
             () => new DomainEntity.Account("AccountName", openingBalanceNegative);
-        var exception = Assert.Throws<EntityValidationException>(action);
-        Assert.Equal("OpeningBalance cannot be negative value", exception.Message);
+
+        action.Should()
+            .Throw<EntityValidationException>()
+            .WithMessage("OpeningBalance cannot be negative value");
     }
     #endregion[OpeningBalanceIsNegativeValidation]
 
     #region[Activate/DesactivateValidation]
     [Fact(DisplayName = nameof(Activate))]
     [Trait("Domain", "Account - Aggregates")]
-    [InlineData(true)]
-    [InlineData(false)]
     public void Activate()
     {
         var validData = new
@@ -180,12 +185,11 @@ public class AccountTest
         var account = new DomainEntity.Account(validData.Name, validData.OpeningBalance, false, false);
         account.Activate();
 
-        Assert.True(account.IsActive);
+        account.IsActive.Should().BeTrue();
     }
+
     [Fact(DisplayName = nameof(Deactivate))]
     [Trait("Domain", "Account - Aggregates")]
-    [InlineData(true)]
-    [InlineData(false)]
     public void Deactivate()
     {
         var validData = new
@@ -196,8 +200,7 @@ public class AccountTest
 
         var account = new DomainEntity.Account(validData.Name, validData.OpeningBalance, false, true);
         account.Deactivate();
-
-        Assert.False(account.IsActive);
+        account.IsActive.Should().BeFalse();
     }
 
     #endregion[Activate/DesactivateValidation]
@@ -214,10 +217,12 @@ public class AccountTest
             Name = "New Name",
             OpeningBalance = 0
         };
+
         account.Update(newValues.Name, newValues.OpeningBalance);
 
-        Assert.Equal(newValues.Name, account.Name);
-        Assert.Equal(newValues.OpeningBalance, account.OpeningBalance);
+        account.Name.Should().Be(newValues.Name);
+        account.OpeningBalance.Should().Be(newValues.OpeningBalance);
+
     }
     [Fact(DisplayName = nameof(UpdateOnlyName))]
     [Trait("Domain", "Account - Aggregates")]
@@ -229,10 +234,11 @@ public class AccountTest
 
         account.Update(newValues.Name);
 
-        Assert.Equal(newValues.Name, account.Name);
-        Assert.Equal(currentOpeningBalance, account.OpeningBalance);
 
+        account.Name.Should().Be(newValues.Name);
+        account.OpeningBalance.Should().Be(currentOpeningBalance);
     }
+
     [Theory(DisplayName = nameof(UpdateErrorWhenNameIsEmpty))]
     [Trait("Domain", "Account - Aggregates")]
     [InlineData("")]
@@ -243,8 +249,10 @@ public class AccountTest
         var account = new DomainEntity.Account("Account Name", 0);
         Action action =
             () => account.Update(name!, 0);
-        var exception = Assert.Throws<EntityValidationException>(action);
-        Assert.Equal("Name should not be empty or null", exception.Message);
+
+        action.Should()
+            .Throw<EntityValidationException>()
+            .WithMessage("Name should not be empty or null");
     }
 
     [Theory(DisplayName = nameof(UpdateErrorWhenNameIsLessThan3Characters))]
@@ -259,8 +267,11 @@ public class AccountTest
         var account = new DomainEntity.Account("Account Name", 0);
         Action action =
             () => account.Update(name!, 0);
-        var exception = Assert.Throws<EntityValidationException>(action);
-        Assert.Equal("Name should be at leats 3 characters long", exception.Message);
+
+
+        action.Should()
+            .Throw<EntityValidationException>()
+            .WithMessage("Name should be at leats 3 characters long");
     }
 
     [Fact(DisplayName = nameof(UpdateErrorWhenNameIsGreaterThan255Characters))]
@@ -272,9 +283,13 @@ public class AccountTest
         var invalidName = String.Join(null, Enumerable.Range(0, 256).Select(_ => "a").ToArray());
         Action action =
             () => account.Update(invalidName, 0);
-        var exception = Assert.Throws<EntityValidationException>(action);
-        Assert.Equal("Name should be less or equal 255 characters long", exception.Message);
+
+        action.Should()
+              .Throw<EntityValidationException>()
+              .WithMessage("Name should be less or equal 255 characters long");
     }
+
+
     [Theory(DisplayName = nameof(UpdateErrorWhenOpeningBalanceIsNegative))]
     [Trait("Domain", "Account - Aggregates")]
     [InlineData(-10)]
@@ -288,8 +303,10 @@ public class AccountTest
 
         Action action =
             () => account.Update("AccountName", openingBalanceNegative);
-        var exception = Assert.Throws<EntityValidationException>(action);
-        Assert.Equal("OpeningBalance cannot be negative value", exception.Message);
+
+        action.Should()
+              .Throw<EntityValidationException>()
+              .WithMessage("OpeningBalance cannot be negative value");
     }
     #endregion
 }
