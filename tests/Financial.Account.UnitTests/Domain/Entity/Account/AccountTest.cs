@@ -7,28 +7,30 @@ using Xunit;
 
 using DomainEntity = Financial.Domain.Entity;
 namespace Financial.UnitTests.Domain.Entity.Account;
-
+[Collection(nameof(AccountTestFixture))]
 public class AccountTest
 {
+    private readonly AccountTestFixture _accountTestFixture;
+
+    public AccountTest(AccountTestFixture accountTestFixture)
+        => _accountTestFixture = accountTestFixture;
+    
     #region[InstantiateValidation]
     [Fact(DisplayName = nameof(Instantiate))]
     [Trait("Domain", "Account - Aggregates")]
     public void Instantiate()
     {
         //Arrange
-        var validData = new
-        {
-            Name = "Account Name",
-            OpeningBalance = 100,
-        };
+        var validAccount = _accountTestFixture.GetValidAccount();
+      
         //Act
         var datetimeBefore = DateTime.Now;
-        var account = new DomainEntity.Account(validData.Name, validData.OpeningBalance);
+        var account = new DomainEntity.Account(validAccount.Name, validAccount.OpeningBalance);
         var datetimeAfter = DateTime.Now;
         //Assert
         account.Should().NotBeNull();
-        account.Name.Should().Be(validData.Name);
-        account.OpeningBalance.Should().Be(validData.OpeningBalance);
+        account.Name.Should().Be(validAccount.Name);
+        account.OpeningBalance.Should().Be(validAccount.OpeningBalance);
         account.Id.Should().NotBeEmpty();
         account.CreatedAt.Should().NotBeSameDateAs(default(DateTime));
         account.OpeningBalanceIsNegative.Should().BeFalse();
@@ -47,19 +49,15 @@ public class AccountTest
     [InlineData(false)]
     public void InstantiateWithOpeningBalanceIsNegative(bool isNegative)
     {
-        var validData = new
-        {
-            Name = "Account Name",
-            OpeningBalance = 100
-        };
+        var validAccount = _accountTestFixture.GetValidAccount();
 
         var datetimeBefore = DateTime.Now;
-        var account = new DomainEntity.Account(validData.Name, validData.OpeningBalance, isNegative);
+        var account = new DomainEntity.Account(validAccount.Name, validAccount.OpeningBalance, isNegative);
         var datetimeAfter = DateTime.Now;
 
         account.Should().NotBeNull();
-        account.Name.Should().Be(validData.Name);
-        account.OpeningBalance.Should().Be(validData.OpeningBalance);
+        account.Name.Should().Be(validAccount.Name);
+        account.OpeningBalance.Should().Be(validAccount.OpeningBalance);
         account.Id.Should().NotBeEmpty();
         account.CreatedAt.Should().NotBeSameDateAs(default(DateTime));
         account.CreatedAt.Should().BeAfter(datetimeBefore);
@@ -79,21 +77,17 @@ public class AccountTest
     public void InstantiateWithIsActive(bool isActive)
     {
         //Arrange
-        var validData = new
-        {
-            Name = "Account Name",
-            OpeningBalance = 100,
-            OpeningBalanceIsNegative = false
-        };
+        var validAccount = _accountTestFixture.GetValidAccount();
+
         //Act
         var datetimeBefore = DateTime.Now;
-        var account = new DomainEntity.Account(validData.Name, validData.OpeningBalance, validData.OpeningBalanceIsNegative, isActive);
+        var account = new DomainEntity.Account(validAccount.Name, validAccount.OpeningBalance, validAccount.OpeningBalanceIsNegative, isActive);
         var datetimeAfter = DateTime.Now;
         //Assert
 
         account.Should().NotBeNull();
-        account.Name.Should().Be(validData.Name);
-        account.OpeningBalance.Should().Be(validData.OpeningBalance);
+        account.Name.Should().Be(validAccount.Name);
+        account.OpeningBalance.Should().Be(validAccount.OpeningBalance);
         account.Id.Should().NotBeEmpty();
         account.CreatedAt.Should().NotBeSameDateAs(default(DateTime));
         account.OpeningBalanceIsNegative.Should().BeFalse();
@@ -112,8 +106,10 @@ public class AccountTest
     
     public void InstantiateErrorWhenNameIsEmpty(string? name)
     {
+        var validAccount = _accountTestFixture.GetValidAccount();
+
         Action action =
-            () => new DomainEntity.Account(name!, 0);
+            () => new DomainEntity.Account(name!, validAccount.OpeningBalance);
         action.Should()
             .Throw<EntityValidationException>()
             .WithMessage("Name should not be empty or null");
@@ -129,8 +125,10 @@ public class AccountTest
 
     public void InstantiateErrorWhenNameIsLessThan3Characters(string name)
     {
+        var validAccount = _accountTestFixture.GetValidAccount();
+
         Action action =
-            () => new DomainEntity.Account(name!, 0);
+            () => new DomainEntity.Account(name!, validAccount.OpeningBalance);
             action.Should()
                 .Throw<EntityValidationException>()
                 .WithMessage("Name should be at leats 3 characters long");
@@ -140,9 +138,11 @@ public class AccountTest
     [Trait("Domain", "Account - Aggregates")]
     public void InstantiateErrorWhenNameIsGreaterThan255Characters()
     {
+        var validAccount = _accountTestFixture.GetValidAccount();
+
         var invalidName = String.Join(null, Enumerable.Range(0, 256).Select(_ => "a").ToArray());
         Action action =
-            () => new DomainEntity.Account(invalidName, 0);
+            () => new DomainEntity.Account(invalidName, validAccount.OpeningBalance);
 
         action.Should()
             .Throw<EntityValidationException>()
@@ -162,8 +162,10 @@ public class AccountTest
 
     public void InstantiateErrorWhenOpeningBalanceIsNegative(int openingBalanceNegative)
     {
+        var validAccount = _accountTestFixture.GetValidAccount();
+
         Action action =
-            () => new DomainEntity.Account("AccountName", openingBalanceNegative);
+            () => new DomainEntity.Account(validAccount.Name, openingBalanceNegative);
 
         action.Should()
             .Throw<EntityValidationException>()
@@ -176,13 +178,9 @@ public class AccountTest
     [Trait("Domain", "Account - Aggregates")]
     public void Activate()
     {
-        var validData = new
-        {
-            Name = "Account Name",
-            OpeningBalance = 100
-        };
+        var validAccount = _accountTestFixture.GetValidAccount();
 
-        var account = new DomainEntity.Account(validData.Name, validData.OpeningBalance, false, false);
+        var account = new DomainEntity.Account(validAccount.Name, validAccount.OpeningBalance, validAccount.OpeningBalanceIsNegative, false);
         account.Activate();
 
         account.IsActive.Should().BeTrue();
@@ -192,13 +190,9 @@ public class AccountTest
     [Trait("Domain", "Account - Aggregates")]
     public void Deactivate()
     {
-        var validData = new
-        {
-            Name = "Account Name",
-            OpeningBalance = 100
-        };
+        var validAccount = _accountTestFixture.GetValidAccount();
 
-        var account = new DomainEntity.Account(validData.Name, validData.OpeningBalance, false, true);
+        var account = new DomainEntity.Account(validAccount.Name, validAccount.OpeningBalance, validAccount.OpeningBalanceIsNegative, true);
         account.Deactivate();
         account.IsActive.Should().BeFalse();
     }
@@ -211,7 +205,7 @@ public class AccountTest
 
     public void Update()
     {
-        var account = new DomainEntity.Account("Category Name", 0);
+        var account = _accountTestFixture.GetValidAccount();
         var newValues = new
         {
             Name = "New Name",
@@ -228,7 +222,7 @@ public class AccountTest
     [Trait("Domain", "Account - Aggregates")]
     public void UpdateOnlyName()
     {
-        var account = new DomainEntity.Account("Account Name", 0);
+        var account = _accountTestFixture.GetValidAccount();
         var newValues = new { Name = "New Name" };
         var currentOpeningBalance = account.OpeningBalance;
 
@@ -246,7 +240,7 @@ public class AccountTest
     [InlineData("    ")]
     public void UpdateErrorWhenNameIsEmpty(string? name)
     {
-        var account = new DomainEntity.Account("Account Name", 0);
+        var account = _accountTestFixture.GetValidAccount();
         Action action =
             () => account.Update(name!, 0);
 
@@ -264,7 +258,7 @@ public class AccountTest
 
     public void UpdateErrorWhenNameIsLessThan3Characters(string name)
     {
-        var account = new DomainEntity.Account("Account Name", 0);
+        var account = _accountTestFixture.GetValidAccount();
         Action action =
             () => account.Update(name!, 0);
 
@@ -278,7 +272,7 @@ public class AccountTest
     [Trait("Domain", "Account - Aggregates")]
     public void UpdateErrorWhenNameIsGreaterThan255Characters()
     {
-        var account = new DomainEntity.Account("Account Name", 0);
+        var account = _accountTestFixture.GetValidAccount();
 
         var invalidName = String.Join(null, Enumerable.Range(0, 256).Select(_ => "a").ToArray());
         Action action =
@@ -299,7 +293,7 @@ public class AccountTest
 
     public void UpdateErrorWhenOpeningBalanceIsNegative(int openingBalanceNegative)
     {
-        var account = new DomainEntity.Account("Account Name", 0);
+        var account = _accountTestFixture.GetValidAccount();
 
         Action action =
             () => account.Update("AccountName", openingBalanceNegative);
