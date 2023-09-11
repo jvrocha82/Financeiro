@@ -22,11 +22,11 @@ public class AccountTest
     {
         //Arrange
         var validAccount = _accountTestFixture.GetValidAccount();
-      
+
         //Act
-        var datetimeBefore = DateTime.Now;
+        var datetimeBefore = DateTime.Now.AddSeconds(-1);
         var account = new DomainEntity.Account(validAccount.Name, validAccount.OpeningBalance);
-        var datetimeAfter = DateTime.Now;
+        var datetimeAfter = DateTime.Now.AddSeconds(1);
         //Assert
         account.Should().NotBeNull();
         account.Name.Should().Be(validAccount.Name);
@@ -51,9 +51,9 @@ public class AccountTest
     {
         var validAccount = _accountTestFixture.GetValidAccount();
 
-        var datetimeBefore = DateTime.Now;
+        var datetimeBefore = DateTime.Now.AddSeconds(-1);
         var account = new DomainEntity.Account(validAccount.Name, validAccount.OpeningBalance, isNegative);
-        var datetimeAfter = DateTime.Now;
+        var datetimeAfter = DateTime.Now.AddSeconds(1);
 
         account.Should().NotBeNull();
         account.Name.Should().Be(validAccount.Name);
@@ -80,9 +80,9 @@ public class AccountTest
         var validAccount = _accountTestFixture.GetValidAccount();
 
         //Act
-        var datetimeBefore = DateTime.Now;
+        var datetimeBefore = DateTime.Now.AddSeconds(-1);
         var account = new DomainEntity.Account(validAccount.Name, validAccount.OpeningBalance, validAccount.OpeningBalanceIsNegative, isActive);
-        var datetimeAfter = DateTime.Now;
+        var datetimeAfter = DateTime.Now.AddSeconds(1);
         //Assert
 
         account.Should().NotBeNull();
@@ -118,10 +118,8 @@ public class AccountTest
 
     [Theory(DisplayName = nameof(InstantiateErrorWhenNameIsLessThan3Characters))]
     [Trait("Domain", "Account - Aggregates")]
-    [InlineData("1")]
-    [InlineData("12")]
-    [InlineData("a")]
-    [InlineData("ca")]
+    [MemberData(nameof(GetNamesWhenNameIsLessThan3Characters), parameters:10)]
+   
 
     public void InstantiateErrorWhenNameIsLessThan3Characters(string name)
     {
@@ -132,6 +130,18 @@ public class AccountTest
             action.Should()
                 .Throw<EntityValidationException>()
                 .WithMessage("Name should be at leats 3 characters long");
+    }
+
+    public static IEnumerable<object[]> GetNamesWhenNameIsLessThan3Characters(int numberOfTests = 6)
+    {
+        var fixture = new AccountTestFixture();
+        for(int i = 0; i < numberOfTests; i++)
+        {
+            var isOdd = i % 2 == 1;
+            yield return new object[] { 
+                fixture.GetValidName()[..(isOdd ? 1 : 2)]
+            };
+        }
     }
 
     [Fact(DisplayName = nameof(InstantiateErrorWhenNameIsGreaterThan255Characters))]
@@ -206,16 +216,13 @@ public class AccountTest
     public void Update()
     {
         var account = _accountTestFixture.GetValidAccount();
-        var newValues = new
-        {
-            Name = "New Name",
-            OpeningBalance = 0
-        };
+        var accountWithNewValues = _accountTestFixture.GetValidAccount();
+  
 
-        account.Update(newValues.Name, newValues.OpeningBalance);
+        account.Update(accountWithNewValues.Name, accountWithNewValues.OpeningBalance);
 
-        account.Name.Should().Be(newValues.Name);
-        account.OpeningBalance.Should().Be(newValues.OpeningBalance);
+        account.Name.Should().Be(accountWithNewValues.Name);
+        account.OpeningBalance.Should().Be(accountWithNewValues.OpeningBalance);
 
     }
     [Fact(DisplayName = nameof(UpdateOnlyName))]
@@ -223,13 +230,14 @@ public class AccountTest
     public void UpdateOnlyName()
     {
         var account = _accountTestFixture.GetValidAccount();
-        var newValues = new { Name = "New Name" };
+        var accountWithNewValues = _accountTestFixture.GetValidName();
+
         var currentOpeningBalance = account.OpeningBalance;
 
-        account.Update(newValues.Name);
+        account.Update(accountWithNewValues);
 
 
-        account.Name.Should().Be(newValues.Name);
+        account.Name.Should().Be(accountWithNewValues);
         account.OpeningBalance.Should().Be(currentOpeningBalance);
     }
 
@@ -240,9 +248,11 @@ public class AccountTest
     [InlineData("    ")]
     public void UpdateErrorWhenNameIsEmpty(string? name)
     {
+        var validOpeningBalance = _accountTestFixture.GetValidOpeningBalance();
+
         var account = _accountTestFixture.GetValidAccount();
         Action action =
-            () => account.Update(name!, 0);
+            () => account.Update(name!, validOpeningBalance);
 
         action.Should()
             .Throw<EntityValidationException>()
@@ -259,8 +269,10 @@ public class AccountTest
     public void UpdateErrorWhenNameIsLessThan3Characters(string name)
     {
         var account = _accountTestFixture.GetValidAccount();
+        var validOpeningBalance = _accountTestFixture.GetValidOpeningBalance();
+
         Action action =
-            () => account.Update(name!, 0);
+            () => account.Update(name!, validOpeningBalance);
 
 
         action.Should()
@@ -273,10 +285,11 @@ public class AccountTest
     public void UpdateErrorWhenNameIsGreaterThan255Characters()
     {
         var account = _accountTestFixture.GetValidAccount();
-
-        var invalidName = String.Join(null, Enumerable.Range(0, 256).Select(_ => "a").ToArray());
+     
+        var invalidName = _accountTestFixture.Faker.Lorem.Letter(256);
+        var validOpeningBalance = _accountTestFixture.GetValidOpeningBalance();
         Action action =
-            () => account.Update(invalidName, 0);
+            () => account.Update(invalidName, validOpeningBalance);
 
         action.Should()
               .Throw<EntityValidationException>()
@@ -294,9 +307,9 @@ public class AccountTest
     public void UpdateErrorWhenOpeningBalanceIsNegative(int openingBalanceNegative)
     {
         var account = _accountTestFixture.GetValidAccount();
-
+        var validName = _accountTestFixture.GetValidName();
         Action action =
-            () => account.Update("AccountName", openingBalanceNegative);
+            () => account.Update(validName, openingBalanceNegative);
 
         action.Should()
               .Throw<EntityValidationException>()

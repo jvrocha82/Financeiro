@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "1zb82gV6/3TLmRMXYbYYsLcFOntsXt1e+yy7+SYH6SnWAt+cEr4dPYJRtB/Q7Fmo6qR8YYY5bALTTD91t2zsJQ==",
+  "dgSpecHash": "pw43N0bibgd7HvhJzvOfIEuHkAPqXhJkuCkM0HkDcvoG4ZZoEKk6QZMoEIU4nlyLP7saW1BALT3FRUJ0h7Yk9w==",
   "success": true,
   "projectFilePath": "C:\\Users\\jvroc\\projetos\\.NET\\Financeiro\\tests\\Financial.Account.UnitTests\\Financial.UnitTests.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\jvroc\\.nuget\\packages\\bogus\\34.0.2\\bogus.34.0.2.nupkg.sha512",
     "C:\\Users\\jvroc\\.nuget\\packages\\coverlet.collector\\3.2.0\\coverlet.collector.3.2.0.nupkg.sha512",
     "C:\\Users\\jvroc\\.nuget\\packages\\fluentassertions\\6.12.0\\fluentassertions.6.12.0.nupkg.sha512",
     "C:\\Users\\jvroc\\.nuget\\packages\\microsoft.codecoverage\\17.5.0\\microsoft.codecoverage.17.5.0.nupkg.sha512",
