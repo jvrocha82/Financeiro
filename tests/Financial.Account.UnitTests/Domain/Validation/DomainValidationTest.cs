@@ -51,7 +51,7 @@ public class DomainValidationTest
 
         action.Should()
             .Throw<EntityValidationException>()
-            .WithMessage($"{fieldName} should not be null or empty");
+            .WithMessage($"{fieldName} should not be empty or null");
     }
 
     [Fact(DisplayName = nameof(NotNullOrEmptyOk))]
@@ -84,7 +84,7 @@ public class DomainValidationTest
 
         action.Should()
             .Throw<EntityValidationException>()
-            .WithMessage($"{fieldName} should not be less than {minLength}");
+            .WithMessage($"{fieldName} should be at leats {minLength} characters long");
     }
 
     public static IEnumerable<object[]> GetValuesSmallerThanTheMin(int numberOfTests = 5) 
@@ -138,7 +138,7 @@ public class DomainValidationTest
             () => DomainValidation.MaxLength(target, maxLength, fieldName);
         action.Should()
             .Throw<EntityValidationException>()
-            .WithMessage($"{fieldName} should not be greater than {maxLength} characters long");
+            .WithMessage($"{fieldName} should be less or equal {maxLength} characters long");
     }
     public static IEnumerable<object[]> GetValuesGreaterThanTheMax(int numberOfTests = 5)
     {
@@ -176,6 +176,54 @@ public class DomainValidationTest
         }
     }
 
+    [Theory(DisplayName = nameof(IsNegativeValueOk))]
+    [Trait("Domain", "DomainValidation - Validation")]
+    [MemberData(nameof(GetNotNegativeValues), 10)]
+    public void IsNegativeValueOk(int target, string fieldName)
+    {
+
+
+        Action action =
+            () => DomainValidation.IsNegativeValue(target, fieldName);
+        action.Should()
+                  .NotThrow<EntityValidationException>();
+    }
+    public static IEnumerable<object[]> GetNotNegativeValues(int numberOfTests = 5)
+    { 
+      
+        var faker = new Faker();
+        for (int i = 0; i < (numberOfTests - 1); i++)
+        {
+            string stringTarget = faker.Commerce.ProductName();
+            var notNegativeValue = (new Random()).Next(0, 5);
+            yield return new object[] { notNegativeValue, stringTarget };
+        }
+    }
+
+    [Theory(DisplayName = nameof(IsNegativeThrowWhenLessThanZeroValue))]
+    [Trait("Domain", "DomainValidation - Validation")]
+    [MemberData(nameof(GetNegativeValues), 10)]
+    public void IsNegativeThrowWhenLessThanZeroValue(int target, string fieldName)
+    {
+
+
+        Action action =
+            () => DomainValidation.IsNegativeValue(target, fieldName);
+        action.Should()
+                  .Throw<EntityValidationException>()
+                  .WithMessage($"{fieldName} cannot be negative value");
+    }
+    public static IEnumerable<object[]> GetNegativeValues(int numberOfTests = 5)
+    {
+
+        var faker = new Faker();
+        for (int i = 0; i < (numberOfTests - 1); i++)
+        {
+            string stringTarget = faker.Commerce.ProductName();
+            var negativeValue = (new Random()).Next(1, 5) * -1;
+            yield return new object[] { negativeValue, stringTarget };
+        }
+    }
 
 
 }
