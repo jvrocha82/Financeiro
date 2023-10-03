@@ -184,7 +184,7 @@ public class DomainValidationTest
 
 
         Action action =
-            () => DomainValidation.IsNegativeValue(target, fieldName);
+            () => DomainValidation.IsNegativeDecimalValue(target, fieldName);
         action.Should()
                   .NotThrow<EntityValidationException>();
     }
@@ -208,7 +208,7 @@ public class DomainValidationTest
 
 
         Action action =
-            () => DomainValidation.IsNegativeValue(target, fieldName);
+            () => DomainValidation.IsNegativeDecimalValue(target, fieldName);
         action.Should()
                   .Throw<EntityValidationException>()
                   .WithMessage($"{fieldName} cannot be negative value");

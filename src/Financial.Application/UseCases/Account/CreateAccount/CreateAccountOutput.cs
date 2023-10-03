@@ -2,7 +2,7 @@
 public class CreateAccountOutput
 {
     public Guid Id { get; set; }
-    public int OpeningBalance { get; set; }
+    public Decimal OpeningBalance { get; set; }
     public string Name { get; set; }
     public bool IsActive { get; set; }
     public bool OpeningBalanceIsNegative { get; set; }
@@ -11,7 +11,7 @@ public class CreateAccountOutput
        Guid id,
        DateTime createdAt,
        string name,
-       int openingBalance,
+       Decimal openingBalance,
        bool openingBalanceIsNegative,
        bool isActive
        )

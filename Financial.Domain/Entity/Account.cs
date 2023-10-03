@@ -5,13 +5,13 @@ using Financial.Domain.Validation;
 namespace Financial.Domain.Entity;
 public class Account : AggregateRoot
 {
-    public int OpeningBalance { get; private set; }
+    public Decimal OpeningBalance { get; private set; }
     public string Name { get; private set; }                
     public DateTime CreatedAt { get; private set; }
     public bool IsActive { get; private set; }
     public bool OpeningBalanceIsNegative { get; private set; }
 
-    public Account(string name, int openingBalance, bool openingBalanceIsNegative = false, bool isActive = true)
+    public Account(string name, Decimal openingBalance, bool openingBalanceIsNegative = false, bool isActive = true)
         : base()
     {
         
@@ -27,7 +27,7 @@ public class Account : AggregateRoot
         DomainValidation.NotNullOrEmpty(Name, nameof(Name));
         DomainValidation.MinLength(Name, 3, nameof(Name));
         DomainValidation.MaxLength(Name, 255, nameof(Name));
-        DomainValidation.IsNegativeValue(OpeningBalance, nameof(OpeningBalance));
+        DomainValidation.IsNegativeDecimalValue(OpeningBalance, nameof(OpeningBalance));
 
     }
     public void Activate()
@@ -40,7 +40,7 @@ public class Account : AggregateRoot
         IsActive = false;
         Validate();
     }
-    public void Update(string name, int? openingBalance = null)
+    public void Update(string name, Decimal? openingBalance = null)
     {
         Name = name;
         OpeningBalance = openingBalance ?? OpeningBalance;

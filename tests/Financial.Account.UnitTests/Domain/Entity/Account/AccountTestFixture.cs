@@ -6,7 +6,7 @@ namespace Financial.UnitTests.Domain.Entity.Account;
 public class AccountTestFixture : BaseFixture
 {
     public AccountTestFixture()
-    :base(){}
+    : base() { }
     public string GetValidName()
     {
         var randomName = "";
@@ -19,11 +19,14 @@ public class AccountTestFixture : BaseFixture
 
         return randomName;
     }
-    public int GetValidOpeningBalance() => new Random().Next();
+    public Decimal GetValidOpeningBalance(){
+        var rand = new Random();
+        return new decimal(rand.NextDouble());
+    }
 
 
 
-    public DomainEntity.Account GetValidAccount() => new(
+public DomainEntity.Account GetValidAccount() => new(
         GetValidName(),
         GetValidOpeningBalance()
     );

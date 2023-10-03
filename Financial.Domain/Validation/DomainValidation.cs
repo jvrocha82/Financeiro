@@ -24,7 +24,7 @@ public class DomainValidation
         if (target.Length > maxLength)
             throw new EntityValidationException($"{fieldName} should be less or equal {maxLength} characters long");
     }
-    public static void IsNegativeValue(int target, string fieldName)
+    public static void IsNegativeDecimalValue(Decimal target, string fieldName)
     {
         if (target < 0)
             throw new EntityValidationException($"{fieldName} cannot be negative value");

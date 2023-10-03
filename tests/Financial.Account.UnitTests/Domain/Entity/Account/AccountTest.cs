@@ -22,11 +22,12 @@ public class AccountTest
     {
         //Arrange
         var validAccount = _accountTestFixture.GetValidAccount();
-
+     
         //Act
         var datetimeBefore = DateTime.Now.AddSeconds(-1);
         var account = new DomainEntity.Account(validAccount.Name, validAccount.OpeningBalance);
         var datetimeAfter = DateTime.Now.AddSeconds(1);
+    
         //Assert
         account.Should().NotBeNull();
         account.Name.Should().Be(validAccount.Name);
@@ -40,6 +41,21 @@ public class AccountTest
 
     }
     #endregion[InstantiateValidation]
+
+    #region[OpeningBalanceTypeValidation]
+    [Fact(DisplayName = nameof(OpeningBalanceTypeOk))]
+    [Trait("Domain", "Account - Aggregates")]
+    public void OpeningBalanceTypeOk()
+    {
+        var ValidAccount = _accountTestFixture.GetValidAccount();
+        var Account = new DomainEntity.Account(ValidAccount.Name, ValidAccount.OpeningBalance);
+        Decimal DecimalVar = 0;
+        var typeDecimalName = DecimalVar.GetType().Name;
+
+        Account.OpeningBalance.GetType().Name.Should().Be(typeDecimalName);
+
+    }
+    #endregion
 
     #region[OpeningBalanceIsNegativeValidation]
 
