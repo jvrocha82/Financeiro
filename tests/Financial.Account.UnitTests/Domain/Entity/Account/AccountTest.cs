@@ -1,4 +1,5 @@
-﻿using Financial.Domain.Exceptions;
+﻿using Financial.Domain.Entity;
+using Financial.Domain.Exceptions;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using System.ComponentModel;
@@ -27,9 +28,14 @@ public class AccountTest
         var datetimeBefore = DateTime.Now.AddSeconds(-1);
         var account = new DomainEntity.Account(validAccount.Name, validAccount.OpeningBalance);
         var datetimeAfter = DateTime.Now.AddSeconds(1);
-    
+
+        Guid GuidExampleValue = new Guid();
+        var typeGuidName = GuidExampleValue.GetType().Name;
         //Assert
+ 
         account.Should().NotBeNull();
+        account.Id.GetType().Name.Should().Be(typeGuidName);
+        account.Id.Should().NotBe(default(Guid));
         account.Name.Should().Be(validAccount.Name);
         account.OpeningBalance.Should().Be(validAccount.OpeningBalance);
         account.Id.Should().NotBeEmpty();

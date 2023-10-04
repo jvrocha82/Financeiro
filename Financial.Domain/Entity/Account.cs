@@ -1,5 +1,4 @@
-﻿using Financial.Domain.Exceptions;
-using Financial.Domain.SeedWork;
+﻿using Financial.Domain.SeedWork;
 using Financial.Domain.Validation;
 
 namespace Financial.Domain.Entity;
