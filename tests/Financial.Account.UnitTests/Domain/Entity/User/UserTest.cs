@@ -1,23 +1,27 @@
 ﻿using Xunit;
 using FluentAssertions;
-using Financial.Domain.Entity;
-using System.Security.Principal;
-using Financial.UnitTests.Domain.Entity.Account;
 using DomainEntity = Financial.Domain.Entity;
 using Financial.Domain.Exceptions;
-using FluentAssertions.Equivalency;
+
 
 namespace Financial.UnitTests.Domain.Entity.User;
+
+[Collection(nameof(UserTestFixture))]
+
 public class UserTest
 {
-    
+    private readonly UserTestFixture _userTestFixture;
+
+    public UserTest(UserTestFixture userTestFixture)
+        => _userTestFixture = userTestFixture;
+
     [Fact(DisplayName =nameof(Instantiate))]
     [Trait("Domain", "User - Aggregate")]
     public void Instantiate()
     {
-   
+        var validUser = _userTestFixture.GetValidUser();
         var datetimeBefore = DateTime.Now.AddSeconds(-1);
-        var user = new DomainEntity.User("Account Name", true);
+        var user = new DomainEntity.User(validUser.Name, true);
         var datetimeAfter = DateTime.Now.AddSeconds(1);
 
         Guid GuidExampleValue = new Guid();
@@ -29,7 +33,7 @@ public class UserTest
 
         user.Id.GetType().Name.Should().Be(typeGuidName);
         user.Id.Should().NotBe(default(Guid));
-        user.Name.Should().Be("Account Name");
+        user.Name.Should().Be(validUser.Name);
         user.CreatedAt.Should().NotBeSameDateAs(default(DateTime));
         user.CreatedAt.Should().BeAfter(datetimeBefore);
         user.CreatedAt.Should().BeBefore(datetimeAfter);
@@ -65,11 +69,16 @@ public class UserTest
     }
     public static IEnumerable<object[]> GetNamesWhenNameIsLessThan3Characters(int numberOfTests = 6)
     {
-        yield return new object[] {"21"};
-        yield return new object[] {"t"};
-        yield return new object[] { "te" };
-        yield return new object[] { "le" };
-        yield return new object[] { "s" };
+        var fixture = new UserTestFixture();
+        for (int i = 0; i < numberOfTests; i++)
+        {
+            var isOdd =  1 % 2 == 1;
+            yield return new object[] {
+                fixture.GetValidName()[..(isOdd ? 1 : 2)]
+            };
+        }
+       
+   
 
     }
     [Fact(DisplayName = nameof(InstantiateErrorWhenNameIsGreaterThan255Characters))]

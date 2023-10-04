@@ -1,9 +1,6 @@
-﻿using Financial.Domain.Entity;
-using Financial.Domain.Exceptions;
+﻿using Financial.Domain.Exceptions;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel;
-using System.ComponentModel;
-using System.Xml.Linq;
 using Xunit;
 
 using DomainEntity = Financial.Domain.Entity;
