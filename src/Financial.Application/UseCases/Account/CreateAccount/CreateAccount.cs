@@ -24,6 +24,7 @@ public class CreateAccount : ICreateAccount
     )
     {
         var account = new DomainEntity.Account(
+            input.UserId,
             input.Name,
             input.OpeningBalance,
             input.OpeningBalanceIsNegative,

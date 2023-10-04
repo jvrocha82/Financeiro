@@ -4,16 +4,17 @@ using Financial.Domain.Validation;
 namespace Financial.Domain.Entity;
 public class Account : AggregateRoot
 {
+    public Guid UserId { get; private set; }
     public Decimal OpeningBalance { get; private set; }
     public string Name { get; private set; }                
     public DateTime CreatedAt { get; private set; }
     public bool IsActive { get; private set; }
     public bool OpeningBalanceIsNegative { get; private set; }
 
-    public Account(string name, Decimal openingBalance, bool openingBalanceIsNegative = false, bool isActive = true)
+    public Account(Guid userId, string name, Decimal openingBalance, bool openingBalanceIsNegative = false, bool isActive = true)
         : base()
     {
-        
+        UserId = userId;
         CreatedAt = DateTime.Now;
         IsActive = isActive;
         Name = name;

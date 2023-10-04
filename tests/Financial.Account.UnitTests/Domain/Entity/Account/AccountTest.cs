@@ -18,12 +18,13 @@ public class AccountTest
     [Trait("Domain", "Account - Aggregates")]
     public void Instantiate()
     {
+        var validUser = _accountTestFixture.GetValidUser(); 
         //Arrange
         var validAccount = _accountTestFixture.GetValidAccount();
-     
+        
         //Act
         var datetimeBefore = DateTime.Now.AddSeconds(-1);
-        var account = new DomainEntity.Account(validAccount.Name, validAccount.OpeningBalance);
+        var account = new DomainEntity.Account(validUser.Id, validAccount.Name, validAccount.OpeningBalance);
         var datetimeAfter = DateTime.Now.AddSeconds(1);
 
         Guid GuidExampleValue = new Guid();
@@ -31,7 +32,10 @@ public class AccountTest
         //Assert
  
         account.Should().NotBeNull();
+       
         account.Id.GetType().Name.Should().Be(typeGuidName);
+        account.UserId.GetType().Name.Should().Be(typeGuidName);
+        account.UserId.Should().Be(validUser.Id);
         account.Id.Should().NotBe(default(Guid));
         account.Name.Should().Be(validAccount.Name);
         account.OpeningBalance.Should().Be(validAccount.OpeningBalance);
@@ -50,13 +54,14 @@ public class AccountTest
     [Trait("Domain", "Account - Aggregates")]
     public void OpeningBalanceTypeOk()
     {
+        var validUser = _accountTestFixture.GetValidUser();
         var ValidAccount = _accountTestFixture.GetValidAccount();
-        var Account = new DomainEntity.Account(ValidAccount.Name, ValidAccount.OpeningBalance);
+
+        var Account = new DomainEntity.Account(validUser.Id, ValidAccount.Name, ValidAccount.OpeningBalance);
         Decimal DecimalVar = 0;
         var typeDecimalName = DecimalVar.GetType().Name;
 
         Account.OpeningBalance.GetType().Name.Should().Be(typeDecimalName);
-
     }
     #endregion
 
@@ -69,9 +74,10 @@ public class AccountTest
     public void InstantiateWithOpeningBalanceIsNegative(bool isNegative)
     {
         var validAccount = _accountTestFixture.GetValidAccount();
+        var validUser = _accountTestFixture.GetValidUser();
 
         var datetimeBefore = DateTime.Now.AddSeconds(-1);
-        var account = new DomainEntity.Account(validAccount.Name, validAccount.OpeningBalance, isNegative);
+        var account = new DomainEntity.Account(validUser.Id, validAccount.Name, validAccount.OpeningBalance, isNegative);
         var datetimeAfter = DateTime.Now.AddSeconds(1);
 
         account.Should().NotBeNull();
@@ -97,10 +103,12 @@ public class AccountTest
     {
         //Arrange
         var validAccount = _accountTestFixture.GetValidAccount();
+        var validUser = _accountTestFixture.GetValidUser();
+
 
         //Act
         var datetimeBefore = DateTime.Now.AddSeconds(-1);
-        var account = new DomainEntity.Account(validAccount.Name, validAccount.OpeningBalance, validAccount.OpeningBalanceIsNegative, isActive);
+        var account = new DomainEntity.Account(validUser.Id, validAccount.Name, validAccount.OpeningBalance, validAccount.OpeningBalanceIsNegative, isActive);
         var datetimeAfter = DateTime.Now.AddSeconds(1);
         //Assert
 
@@ -126,9 +134,10 @@ public class AccountTest
     public void InstantiateErrorWhenNameIsEmpty(string? name)
     {
         var validAccount = _accountTestFixture.GetValidAccount();
+        var validUser = _accountTestFixture.GetValidUser();
 
         Action action =
-            () => new DomainEntity.Account(name!, validAccount.OpeningBalance);
+            () => new DomainEntity.Account(validUser.Id, name!, validAccount.OpeningBalance);
         action.Should()
             .Throw<EntityValidationException>()
             .WithMessage("Name should not be empty or null");
@@ -143,9 +152,10 @@ public class AccountTest
     public void InstantiateErrorWhenNameIsLessThan3Characters(string name)
     {
         var validAccount = _accountTestFixture.GetValidAccount();
+        var validUser = _accountTestFixture.GetValidUser();
 
         Action action =
-            () => new DomainEntity.Account(name!, validAccount.OpeningBalance);
+            () => new DomainEntity.Account(validUser.Id, name!, validAccount.OpeningBalance);
             action.Should()
                 .Throw<EntityValidationException>()
                 .WithMessage("Name should be at leats 3 characters long");
@@ -168,10 +178,11 @@ public class AccountTest
     public void InstantiateErrorWhenNameIsGreaterThan255Characters()
     {
         var validAccount = _accountTestFixture.GetValidAccount();
+        var validUser = _accountTestFixture.GetValidUser();
 
         var invalidName = String.Join(null, Enumerable.Range(0, 256).Select(_ => "a").ToArray());
         Action action =
-            () => new DomainEntity.Account(invalidName, validAccount.OpeningBalance);
+            () => new DomainEntity.Account(validUser.Id, invalidName, validAccount.OpeningBalance);
 
         action.Should()
             .Throw<EntityValidationException>()
@@ -192,9 +203,10 @@ public class AccountTest
     public void InstantiateErrorWhenOpeningBalanceIsNegative(int openingBalanceNegative)
     {
         var validAccount = _accountTestFixture.GetValidAccount();
+        var validUser = _accountTestFixture.GetValidUser();
 
         Action action =
-            () => new DomainEntity.Account(validAccount.Name, openingBalanceNegative);
+            () => new DomainEntity.Account(validUser.Id, validAccount.Name, openingBalanceNegative);
 
         action.Should()
             .Throw<EntityValidationException>()
@@ -208,8 +220,9 @@ public class AccountTest
     public void Activate()
     {
         var validAccount = _accountTestFixture.GetValidAccount();
+        var validUser = _accountTestFixture.GetValidUser();
 
-        var account = new DomainEntity.Account(validAccount.Name, validAccount.OpeningBalance, validAccount.OpeningBalanceIsNegative, false);
+        var account = new DomainEntity.Account(validUser.Id, validAccount.Name, validAccount.OpeningBalance, validAccount.OpeningBalanceIsNegative, false);
         account.Activate();
 
         account.IsActive.Should().BeTrue();
@@ -220,8 +233,9 @@ public class AccountTest
     public void Deactivate()
     {
         var validAccount = _accountTestFixture.GetValidAccount();
+        var validUser = _accountTestFixture.GetValidUser();
 
-        var account = new DomainEntity.Account(validAccount.Name, validAccount.OpeningBalance, validAccount.OpeningBalanceIsNegative, true);
+        var account = new DomainEntity.Account(validUser.Id, validAccount.Name, validAccount.OpeningBalance, validAccount.OpeningBalanceIsNegative, true);
         account.Deactivate();
         account.IsActive.Should().BeFalse();
     }

@@ -28,9 +28,11 @@ public class CreateAccountTestFixture : BaseFixture
     public int GetValidOpeningBalance() => new Random().Next();
 
     public bool GetRandomBoolean() => (new Random()).NextDouble() < 0.5;
+    public Guid GetValidUserId() => Guid.NewGuid();
 
     public CreateAccountInput GetInput() 
         => new(
+            GetValidUserId(),
             GetValidName(),
             GetValidOpeningBalance(),
             GetRandomBoolean(),

@@ -27,8 +27,13 @@ public class AccountTestFixture : BaseFixture
 
 
 public DomainEntity.Account GetValidAccount() => new(
+        GetValidUser().Id,
         GetValidName(),
         GetValidOpeningBalance()
+    );
+public DomainEntity.User GetValidUser() => new(
+        GetValidName(),
+        true
     );
 }
 [CollectionDefinition(nameof(AccountTestFixture))]
