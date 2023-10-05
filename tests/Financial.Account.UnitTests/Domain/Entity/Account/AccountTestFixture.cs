@@ -1,5 +1,4 @@
-﻿using Bogus.DataSets;
-using Financial.UnitTests.Common;
+﻿using Financial.UnitTests.Common;
 using Xunit;
 using DomainEntity = Financial.Domain.Entity;
 namespace Financial.UnitTests.Domain.Entity.Account;

@@ -1,13 +1,8 @@
-﻿using Financial.Application.Interfaces;
-using Financial.Application.UseCases.Account.CreateAccount;
+﻿using Financial.Application.UseCases.Account.CreateAccount;
 using Financial.Domain.Entity;
 using Financial.Domain.Exceptions;
-using Financial.Domain.Repository;
-using Financial.UnitTests.Domain.Entity.Account;
 using FluentAssertions;
 using Moq;
-using System.ComponentModel.DataAnnotations;
-using System.Drawing;
 using Xunit;
 using UseCases = Financial.Application.UseCases.Account.CreateAccount;
 
