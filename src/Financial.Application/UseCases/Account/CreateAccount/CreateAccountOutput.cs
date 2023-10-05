@@ -2,6 +2,7 @@
 public class CreateAccountOutput
 {
     public Guid Id { get; set; }
+    public Guid UserId { get; set; }
     public Decimal OpeningBalance { get; set; }
     public string Name { get; set; }
     public bool IsActive { get; set; }
@@ -9,6 +10,7 @@ public class CreateAccountOutput
     public DateTime CreatedAt { get; set; }
    public CreateAccountOutput(
        Guid id,
+       Guid userId,
        DateTime createdAt,
        string name,
        Decimal openingBalance,
@@ -17,6 +19,7 @@ public class CreateAccountOutput
        )
     {
         Id = id;
+        UserId = userId;
         CreatedAt = createdAt;
         Name = name;
         OpeningBalance = openingBalance;

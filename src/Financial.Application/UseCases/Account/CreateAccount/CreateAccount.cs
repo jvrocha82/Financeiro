@@ -36,6 +36,7 @@ public class CreateAccount : ICreateAccount
 
         return new CreateAccountOutput(
             account.Id,
+            account.UserId,
             account.CreatedAt,
             account.Name,
             account.OpeningBalance,
