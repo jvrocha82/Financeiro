@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "j8myBQjR0e4kBfrEu7MwfO/cHIRxOs2ZTy335Qaq5/PslTIU7fxtZSQ4Xyzwv42h8FEfT7xXlwLe37pLHICx5A==",
+  "dgSpecHash": "GkfnXbXj1mdCmIInypbreSVWxw/uzbWkZCZLhx7KdaEHaDKLEnwhZq9upIq0Dc3CQFIPBl30DIjJ7CQRssyGZQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\jvroc\\projetos\\.NET\\Financeiro\\tests\\Financial.Account.UnitTests\\Financial.UnitTests.csproj",
   "expectedPackageFiles": [
@@ -8,7 +8,10 @@
     "C:\\Users\\jvroc\\.nuget\\packages\\castle.core\\5.1.1\\castle.core.5.1.1.nupkg.sha512",
     "C:\\Users\\jvroc\\.nuget\\packages\\coverlet.collector\\3.2.0\\coverlet.collector.3.2.0.nupkg.sha512",
     "C:\\Users\\jvroc\\.nuget\\packages\\fluentassertions\\6.12.0\\fluentassertions.6.12.0.nupkg.sha512",
+    "C:\\Users\\jvroc\\.nuget\\packages\\mediatr\\12.1.1\\mediatr.12.1.1.nupkg.sha512",
+    "C:\\Users\\jvroc\\.nuget\\packages\\mediatr.contracts\\2.0.1\\mediatr.contracts.2.0.1.nupkg.sha512",
     "C:\\Users\\jvroc\\.nuget\\packages\\microsoft.codecoverage\\17.5.0\\microsoft.codecoverage.17.5.0.nupkg.sha512",
+    "C:\\Users\\jvroc\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\6.0.0\\microsoft.extensions.dependencyinjection.abstractions.6.0.0.nupkg.sha512",
     "C:\\Users\\jvroc\\.nuget\\packages\\microsoft.net.test.sdk\\17.5.0\\microsoft.net.test.sdk.17.5.0.nupkg.sha512",
     "C:\\Users\\jvroc\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
     "C:\\Users\\jvroc\\.nuget\\packages\\microsoft.netcore.targets\\1.1.0\\microsoft.netcore.targets.1.1.0.nupkg.sha512",

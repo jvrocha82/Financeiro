@@ -1,4 +1,6 @@
-﻿namespace Financial.Application.UseCases.Account;
+﻿using DomainEntity = Financial.Domain.Entity;
+
+namespace Financial.Application.UseCases.Account;
 public class CreateAccountOutput
 {
     public Guid Id { get; set; }
@@ -26,4 +28,15 @@ public class CreateAccountOutput
         OpeningBalanceIsNegative = openingBalanceIsNegative;
         IsActive = isActive;
     }
+
+    public static CreateAccountOutput FromAccount(DomainEntity.Account account)
+        => new CreateAccountOutput(
+            account.Id,
+            account.UserId,
+            account.CreatedAt,
+            account.Name,
+            account.OpeningBalance,
+            account.OpeningBalanceIsNegative,
+            account.IsActive
+        );
 }

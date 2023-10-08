@@ -1,5 +1,7 @@
-﻿namespace Financial.Application.UseCases.Account.CreateAccount;
-public class CreateAccountInput
+﻿using MediatR;
+
+namespace Financial.Application.UseCases.Account.CreateAccount;
+public class CreateAccountInput : IRequest<CreateAccountOutput>
 {
     public Guid UserId { get; set; }
     public int OpeningBalance { get; set; }

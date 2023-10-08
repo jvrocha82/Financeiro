@@ -23,17 +23,17 @@ public class AccountTestFixture : BaseFixture
         return new decimal(rand.NextDouble());
     }
 
+    public DomainEntity.User GetValidUser() => new(
+        GetValidName(),
+        true
+    );
 
-
-public DomainEntity.Account GetValidAccount() => new(
+    public DomainEntity.Account GetValidAccount() => new(
         GetValidUser().Id,
         GetValidName(),
         GetValidOpeningBalance()
     );
-public DomainEntity.User GetValidUser() => new(
-        GetValidName(),
-        true
-    );
+
 }
 [CollectionDefinition(nameof(AccountTestFixture))]
 public class AccountTestFixtureCollection 

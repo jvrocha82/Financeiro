@@ -34,14 +34,6 @@ public class CreateAccount : ICreateAccount
         await _accountRepository.Insert(account, cancellationToken);
         await _unitOfWork.Commit(cancellationToken);
 
-        return new CreateAccountOutput(
-            account.Id,
-            account.UserId,
-            account.CreatedAt,
-            account.Name,
-            account.OpeningBalance,
-            account.OpeningBalanceIsNegative,
-            account.IsActive
-        );
+        return CreateAccountOutput.FromAccount(account);
     }
 }

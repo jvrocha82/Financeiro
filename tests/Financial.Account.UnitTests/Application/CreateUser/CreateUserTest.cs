@@ -13,9 +13,9 @@ public class CreateUserTest
     public CreateUserTest(CreateUserTestFixture fixture)
     => _fixture = fixture;
 
-    [Fact(DisplayName = nameof(CreateUser))]
+    [Fact(DisplayName = nameof(Application.CreateUser))]
     [Trait("Application", "CreateUser - Use Cases")]
-    public async void createUser()
+    public async void CreateUser()
     {
         var repositoryMock = _fixture.GetRepositoryMock();
         var unitOfWorkMock = _fixture.GetUnitOfWorkMock();
@@ -44,7 +44,7 @@ public class CreateUserTest
         output.Name.Should().Be(input.Name);
         output.IsActive.Should().Be(input.IsActive);
         (output.Id != Guid.Empty).Should().BeTrue();
-        (output.CreatedAt != default(DateTime)).Should().BeTrue();
+        (output.CreatedAt != default).Should().BeTrue();
 
     }
 }

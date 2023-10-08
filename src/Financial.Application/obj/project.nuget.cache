@@ -1,8 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "ZGZVsEzY9OFLoI18y5pHwrDOK5xAGKq8F0AiaR5JB9+JZgyqnahG4Nbk+QQk8oc8WPhPin7QBlzjTZD/VPaw5w==",
+  "dgSpecHash": "X761/ox/w8nR7SGksBzQvUaPgFU8iwijfup+bmfErNjpSRe1QTcMR+sr34w7itMjkiTImn/f1P/EnxCBso/Npw==",
   "success": true,
   "projectFilePath": "C:\\Users\\jvroc\\projetos\\.NET\\Financeiro\\src\\Financial.Application\\Financial.Application.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\jvroc\\.nuget\\packages\\mediatr\\12.1.1\\mediatr.12.1.1.nupkg.sha512",
+    "C:\\Users\\jvroc\\.nuget\\packages\\mediatr.contracts\\2.0.1\\mediatr.contracts.2.0.1.nupkg.sha512",
+    "C:\\Users\\jvroc\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\6.0.0\\microsoft.extensions.dependencyinjection.abstractions.6.0.0.nupkg.sha512"
+  ],
   "logs": []
 }
