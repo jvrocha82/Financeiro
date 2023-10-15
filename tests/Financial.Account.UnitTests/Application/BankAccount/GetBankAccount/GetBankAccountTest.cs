@@ -13,18 +13,18 @@ public class GetBankAccountTest
     => _fixture = fixture;
 
 
-    [Fact(DisplayName = nameof(GetAccount))]
-    [Trait("Application", "GetAccount - Use Cases")]
-    public async Task GetAccount()
+    [Fact(DisplayName = nameof(GetBankAccount))]
+    [Trait("Application", "GetBankAccount - Use Cases")]
+    public async Task GetBankAccount()
     {
         var repositoryMock = _fixture.GetRepositoryMock();
-        var exampleAccount = _fixture.GetValidAccount();
+        var exampleBankAccount = _fixture.GetValidAccount();
         repositoryMock.Setup(x => x.Get(
             It.IsAny<Guid>(),
             It.IsAny<CancellationToken>()
-        )).ReturnsAsync(exampleAccount);
+        )).ReturnsAsync(exampleBankAccount);
 
-        var input = new UseCases.GetBankAccountInput(exampleAccount.Id);
+        var input = new UseCases.GetBankAccountInput(exampleBankAccount.Id);
         var useCase = new UseCases.GetBankAccount(repositoryMock.Object);
 
         var output = await useCase.Handle(input, CancellationToken.None);
@@ -35,13 +35,13 @@ public class GetBankAccountTest
             ), Times.Once);
 
         output.Should().NotBeNull();
-        output.Name.Should().Be(exampleAccount.Name);
-        output.OpeningBalance.Should().Be(exampleAccount.OpeningBalance);
-        output.OpeningBalanceIsNegative.Should().Be(exampleAccount.OpeningBalanceIsNegative);
-        output.IsActive.Should().Be(exampleAccount.IsActive);
+        output.Name.Should().Be(exampleBankAccount.Name);
+        output.OpeningBalance.Should().Be(exampleBankAccount.OpeningBalance);
+        output.OpeningBalanceIsNegative.Should().Be(exampleBankAccount.OpeningBalanceIsNegative);
+        output.IsActive.Should().Be(exampleBankAccount.IsActive);
         (output.Id != Guid.Empty).Should().BeTrue();
-        output.Id.Should().Be(exampleAccount.Id);
-        output.CreatedAt.Should().Be(exampleAccount.CreatedAt);
+        output.Id.Should().Be(exampleBankAccount.Id);
+        output.CreatedAt.Should().Be(exampleBankAccount.CreatedAt);
         (output.CreatedAt != default).Should().BeTrue();
     }
 
