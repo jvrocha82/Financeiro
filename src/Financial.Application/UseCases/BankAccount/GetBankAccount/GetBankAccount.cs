@@ -1,22 +1,22 @@
-﻿using Financial.Domain.Repository;
-using MediatR;
+﻿using Financial.Application.UseCases.BankAccount.Common;
+using Financial.Domain.Repository;
 
 namespace Financial.Application.UseCases.BankAccount.GetBankAccount;
-public class GetBankAccount : IRequestHandler<GetBankAccountInput, GetBankAccountOutput>
+public class GetBankAccount : IGetBankAccount
 {
-    private readonly IBankAccountRepository _accountRepository;
+    private readonly IBankAccountRepository _bankAccountRepository;
 
-    public GetBankAccount(IBankAccountRepository accountRepository)
-    => _accountRepository = accountRepository;
+    public GetBankAccount(IBankAccountRepository bankAccountRepository)
+    => _bankAccountRepository = bankAccountRepository;
 
 
-    public async Task<GetBankAccountOutput> Handle(
+    public async Task<BankAccountModelOutput> Handle(
         GetBankAccountInput request,
         CancellationToken cancellationToken
     )
     {
-        var account = await _accountRepository.Get(request.Id, cancellationToken);
+        var account = await _bankAccountRepository.Get(request.Id, cancellationToken);
 
-        return GetBankAccountOutput.FromAccount(account);
+        return BankAccountModelOutput.FromBankAccount(account);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Financial.Application.Interfaces;
+using Financial.Application.UseCases.BankAccount.Common;
 using Financial.Domain.Repository;
 using DomainEntity = Financial.Domain.Entity;
 
@@ -6,24 +7,24 @@ namespace Financial.Application.UseCases.BankAccount.CreateBankAccount;
 public class CreateBankAccount : ICreateBankAccount
 {
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IBankAccountRepository _accountRepository;
+    private readonly IBankAccountRepository _bankAccountRepository;
 
     public CreateBankAccount(
-        IBankAccountRepository accountRepository,
+        IBankAccountRepository BankAccountRepository,
         IUnitOfWork unitOfWork
 
         )
     {
-        _accountRepository = accountRepository;
+        _bankAccountRepository = BankAccountRepository;
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<CreateBankAccountOutput> Handle(
+    public async Task<BankAccountModelOutput> Handle(
         CreateBankAccountInput input,
         CancellationToken cancellationToken
     )
     {
-        var account = new DomainEntity.BankAccount(
+        var BankAccount = new DomainEntity.BankAccount(
             input.UserId,
             input.Name,
             input.OpeningBalance,
@@ -31,9 +32,9 @@ public class CreateBankAccount : ICreateBankAccount
             input.IsActive
         );
 
-        await _accountRepository.Insert(account, cancellationToken);
+        await _bankAccountRepository.Insert(BankAccount, cancellationToken);
         await _unitOfWork.Commit(cancellationToken);
 
-        return CreateBankAccountOutput.FromAccount(account);
+        return BankAccountModelOutput.FromBankAccount(BankAccount);
     }
 }
