@@ -51,7 +51,7 @@ public class BankAccountTest
 
     #region[OpeningBalanceTypeValidation]
     [Fact(DisplayName = nameof(OpeningBalanceTypeOk))]
-    [Trait("Domain", "Account - Aggregates")]
+    [Trait("Domain", "Bank Account - Aggregates")]
     public void OpeningBalanceTypeOk()
     {
         var validUser = _bankAccountTestFixture.GetValidUser();
@@ -68,7 +68,7 @@ public class BankAccountTest
     #region[OpeningBalanceIsNegativeValidation]
 
     [Theory(DisplayName = nameof(InstantiateWithOpeningBalanceIsNegative))]
-    [Trait("Domain", "Account - Aggregates")]
+    [Trait("Domain", "Bank Account - Aggregates")]
     [InlineData(true)]
     [InlineData(false)]
     public void InstantiateWithOpeningBalanceIsNegative(bool isNegative)

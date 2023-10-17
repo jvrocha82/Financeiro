@@ -1,6 +1,8 @@
 ﻿using FluentAssertions;
 using Moq;
 using Xunit;
+using Financial.Application.Exceptions;
+
 using UseCases = Financial.Application.UseCases.BankAccount.GetBankAccount;
 
 namespace Financial.UnitTests.Application.BankAccount.GetBankAccount;
@@ -18,7 +20,7 @@ public class GetBankAccountTest
     public async Task GetBankAccount()
     {
         var repositoryMock = _fixture.GetRepositoryMock();
-        var exampleBankAccount = _fixture.GetValidAccount();
+        var exampleBankAccount = _fixture.GetValidBankAccount();
         repositoryMock.Setup(x => x.Get(
             It.IsAny<Guid>(),
             It.IsAny<CancellationToken>()
@@ -43,6 +45,34 @@ public class GetBankAccountTest
         output.Id.Should().Be(exampleBankAccount.Id);
         output.CreatedAt.Should().Be(exampleBankAccount.CreatedAt);
         (output.CreatedAt != default).Should().BeTrue();
+    }
+
+    [Fact(DisplayName = nameof(NotFountExceptionWhenBankAccountDoesntExist))]
+    [Trait("Application", "GetBankAccount - Use Cases")]
+    public async Task NotFountExceptionWhenBankAccountDoesntExist()
+    {
+        var repositoryMock = _fixture.GetRepositoryMock();
+        var exampleGuid = Guid.NewGuid();
+
+        repositoryMock.Setup(x => x.Get(
+            It.IsAny<Guid>(),
+            It.IsAny<CancellationToken>()
+        )).ThrowsAsync(
+            new NotFoundException($"BankAccount '${exampleGuid} not found'")
+        );
+
+        var input = new UseCases.GetBankAccountInput(exampleGuid);
+        var useCase = new UseCases.GetBankAccount(repositoryMock.Object);
+
+      var task = async () 
+            => await useCase.Handle(input, CancellationToken.None);
+
+        await task.Should().ThrowAsync<NotFoundException>();
+
+        repositoryMock.Verify(x => x.Get(
+            It.IsAny<Guid>(),
+            It.IsAny<CancellationToken>()
+            ), Times.Once);
     }
 
 }

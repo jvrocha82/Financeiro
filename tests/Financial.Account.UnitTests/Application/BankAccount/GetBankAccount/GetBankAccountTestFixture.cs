@@ -36,7 +36,7 @@ public class GetBankAccountTestFixture : BaseFixture
         true
     );
 
-    public DomainEntity.BankAccount GetValidAccount() => new(
+    public DomainEntity.BankAccount GetValidBankAccount() => new(
         GetValidUser().Id,
         GetValidName(),
         GetValidOpeningBalance()
