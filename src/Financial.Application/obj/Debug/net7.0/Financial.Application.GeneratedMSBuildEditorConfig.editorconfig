@@ -8,4 +8,4 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = Financial.Application
-build_property.ProjectDir = C:\Users\jvroc\projetos\.NET\Financeiro\src\Financial.Application\
+build_property.ProjectDir = C:\Users\jvroc\source\repos\Financeiro\src\Financial.Application\

@@ -15,8 +15,8 @@ public class GetBankAccount : IGetBankAccount
         CancellationToken cancellationToken
     )
     {
-        var account = await _bankAccountRepository.Get(request.Id, cancellationToken);
+        var bankAccount = await _bankAccountRepository.Get(request.Id, cancellationToken);
 
-        return BankAccountModelOutput.FromBankAccount(account);
+        return BankAccountModelOutput.FromBankAccount(bankAccount);
     }
 }

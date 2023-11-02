@@ -53,6 +53,19 @@
           }
         }
       },
+      "FluentValidation/11.8.0": {
+        "type": "package",
+        "compile": {
+          "lib/net7.0/FluentValidation.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0/FluentValidation.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "MediatR/12.1.1": {
         "type": "package",
         "dependencies": {
@@ -1882,6 +1895,7 @@
         "framework": ".NETCoreApp,Version=v7.0",
         "dependencies": {
           "Financial.Domain": "1.0.0",
+          "FluentValidation": "11.8.0",
           "MediatR": "12.1.1"
         },
         "compile": {
@@ -2028,6 +2042,29 @@
         "lib/netstandard2.1/FluentAssertions.dll",
         "lib/netstandard2.1/FluentAssertions.pdb",
         "lib/netstandard2.1/FluentAssertions.xml"
+      ]
+    },
+    "FluentValidation/11.8.0": {
+      "sha512": "TiEaaYqSIAS+wXQv46LRm8Mca092XYNePD0n231Hqlkmm5FuToZoWnjI1ef/vJUxBzqR7/k2vaVQXxijNgVKRQ==",
+      "type": "package",
+      "path": "fluentvalidation/11.8.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "fluent-validation-icon.png",
+        "fluentvalidation.11.8.0.nupkg.sha512",
+        "fluentvalidation.nuspec",
+        "lib/net5.0/FluentValidation.dll",
+        "lib/net5.0/FluentValidation.xml",
+        "lib/net6.0/FluentValidation.dll",
+        "lib/net6.0/FluentValidation.xml",
+        "lib/net7.0/FluentValidation.dll",
+        "lib/net7.0/FluentValidation.xml",
+        "lib/netstandard2.0/FluentValidation.dll",
+        "lib/netstandard2.0/FluentValidation.xml",
+        "lib/netstandard2.1/FluentValidation.dll",
+        "lib/netstandard2.1/FluentValidation.xml"
       ]
     },
     "MediatR/12.1.1": {
@@ -5962,24 +5999,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\jvroc\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\jvroc\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\jvroc\\projetos\\.NET\\Financeiro\\tests\\Financial.Account.UnitTests\\Financial.UnitTests.csproj",
+      "projectUniqueName": "C:\\Users\\jvroc\\source\\repos\\Financeiro\\tests\\Financial.Account.UnitTests\\Financial.UnitTests.csproj",
       "projectName": "Financial.UnitTests",
-      "projectPath": "C:\\Users\\jvroc\\projetos\\.NET\\Financeiro\\tests\\Financial.Account.UnitTests\\Financial.UnitTests.csproj",
+      "projectPath": "C:\\Users\\jvroc\\source\\repos\\Financeiro\\tests\\Financial.Account.UnitTests\\Financial.UnitTests.csproj",
       "packagesPath": "C:\\Users\\jvroc\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\jvroc\\projetos\\.NET\\Financeiro\\tests\\Financial.Account.UnitTests\\obj\\",
+      "outputPath": "C:\\Users\\jvroc\\source\\repos\\Financeiro\\tests\\Financial.Account.UnitTests\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
         "C:\\Users\\jvroc\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -5987,18 +6019,17 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "C:\\Users\\jvroc\\projetos\\.NET\\Financeiro\\Financial.Domain\\Financial.Domain.csproj": {
-              "projectPath": "C:\\Users\\jvroc\\projetos\\.NET\\Financeiro\\Financial.Domain\\Financial.Domain.csproj"
+            "C:\\Users\\jvroc\\source\\repos\\Financeiro\\Financial.Domain\\Financial.Domain.csproj": {
+              "projectPath": "C:\\Users\\jvroc\\source\\repos\\Financeiro\\Financial.Domain\\Financial.Domain.csproj"
             },
-            "C:\\Users\\jvroc\\projetos\\.NET\\Financeiro\\src\\Financial.Application\\Financial.Application.csproj": {
-              "projectPath": "C:\\Users\\jvroc\\projetos\\.NET\\Financeiro\\src\\Financial.Application\\Financial.Application.csproj"
+            "C:\\Users\\jvroc\\source\\repos\\Financeiro\\src\\Financial.Application\\Financial.Application.csproj": {
+              "projectPath": "C:\\Users\\jvroc\\source\\repos\\Financeiro\\src\\Financial.Application\\Financial.Application.csproj"
             }
           }
         }
@@ -6062,7 +6093,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.304\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.402\\RuntimeIdentifierGraph.json"
       }
     }
   }

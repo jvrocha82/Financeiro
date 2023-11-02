@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "X761/ox/w8nR7SGksBzQvUaPgFU8iwijfup+bmfErNjpSRe1QTcMR+sr34w7itMjkiTImn/f1P/EnxCBso/Npw==",
+  "dgSpecHash": "77BiRh5ipznxy+1zfOFLXjAxjMd/s4L4gbGeM7HSWQpFYRKMZiP/CiRCHNE5xvFm5XR39h/ln5OutCWXif7Qvw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\jvroc\\projetos\\.NET\\Financeiro\\src\\Financial.Application\\Financial.Application.csproj",
+  "projectFilePath": "C:\\Users\\jvroc\\source\\repos\\Financeiro\\src\\Financial.Application\\Financial.Application.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\jvroc\\.nuget\\packages\\fluentvalidation\\11.8.0\\fluentvalidation.11.8.0.nupkg.sha512",
     "C:\\Users\\jvroc\\.nuget\\packages\\mediatr\\12.1.1\\mediatr.12.1.1.nupkg.sha512",
     "C:\\Users\\jvroc\\.nuget\\packages\\mediatr.contracts\\2.0.1\\mediatr.contracts.2.0.1.nupkg.sha512",
     "C:\\Users\\jvroc\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\6.0.0\\microsoft.extensions.dependencyinjection.abstractions.6.0.0.nupkg.sha512"

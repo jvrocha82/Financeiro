@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "ggRzVshCfrOLdpdDdhoWOaXjCSBPVdesKkqUkXx7BOhk7uLyu7wFVJ+fJjBGYmJ3GMrnrD3subrhJgCcMqYakA==",
+  "dgSpecHash": "EEuH696u722hlVnuOsZDCtgiYbsVwBGpaufjYIyYJzH/g0SF8cdrBikwq7Fgnqcr6d+fSD9TjUeT9m9mHlzA2Q==",
   "success": true,
-  "projectFilePath": "C:\\Users\\jvroc\\projetos\\.NET\\Financeiro\\Financial.Domain\\Financial.Domain.csproj",
+  "projectFilePath": "C:\\Users\\jvroc\\source\\repos\\Financeiro\\Financial.Domain\\Financial.Domain.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }
