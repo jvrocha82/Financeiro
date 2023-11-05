@@ -8,10 +8,11 @@ using Xunit;
 using DomainEntity = Financial.Domain.Entity;
 
 namespace Financial.UnitTests.Application.BankAccount.DeleteBankAccount;
+[CollectionDefinition(nameof(DeleteBankAccountTestFixture))]
+
 public class DeleteBankAccountTestFixtureCollection
     : ICollectionFixture<DeleteBankAccountTestFixture>
 { }
-[CollectionDefinition(nameof(DeleteBankAccountTestFixture))]
 
 public class DeleteBankAccountTestFixture : BaseFixture
 {
