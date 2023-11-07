@@ -1,4 +1,5 @@
 ﻿using Financial.Application.Interfaces;
+using Financial.Application.UseCases.BankAccount.CreateBankAccount;
 using Financial.Application.UseCases.BankAccount.UpdateBankAccount;
 using Financial.Domain.Repository;
 using Financial.UnitTests.Common;
@@ -44,7 +45,30 @@ public class UpdateBankAccountTestFixture
     GetValidUserId(),
     GetValidName(),
     GetValidOpeningBalance()
-);
+    );
+
+
+    public UpdateBankAccountInput GetInvalidInputShortName()
+    {
+        var invalidInputShortName = GetValidBankAccountInput();
+        invalidInputShortName.Name = invalidInputShortName.Name[..2];
+
+        return invalidInputShortName;
+
+    }
+    public UpdateBankAccountInput GetInvalidInputLongName()
+    {
+        var invalidInputTooLongName = GetValidBankAccountInput();
+        invalidInputTooLongName.Name = Faker.Lorem.Letter(256);
+        return invalidInputTooLongName;
+    }
+    public UpdateBankAccountInput GetInvalidInputWithNegativeOpeningBalance()
+    {
+
+        var invalidInputNegativeOpeningBalance = GetValidBankAccountInput();
+        invalidInputNegativeOpeningBalance.OpeningBalance *= -1;
+        return invalidInputNegativeOpeningBalance;
+    }
     public Mock<IBankAccountRepository> GetRepositoryMock()
         => new();
 

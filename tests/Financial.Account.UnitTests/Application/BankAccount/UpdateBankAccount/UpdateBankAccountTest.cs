@@ -1,6 +1,7 @@
 ﻿using Financial.Application.Exceptions;
 using Financial.Application.UseCases.BankAccount.Common;
 using Financial.Application.UseCases.BankAccount.UpdateBankAccount;
+using Financial.Domain.Exceptions;
 using FluentAssertions;
 using Moq;
 using Xunit;
@@ -199,6 +200,44 @@ public class UpdateBankAccountTest
         unitOfWorkMock.Verify(x => x.Commit(
             It.IsAny<CancellationToken>())
         , Times.Once());
+
+    }
+
+    [Theory(DisplayName = "")]
+    [Trait("Application", "UpdateBankAccount - Use")]
+    [MemberData(
+        nameof(UpdateBankAccountTestDataGenerator.GetInvalidInputs),
+        parameters: 12,
+        MemberType = typeof(UpdateBankAccountTestDataGenerator)
+        )]
+    public async Task ThrowWhenCantUpdateBankAccount(
+        UpdateBankAccountInput input,
+        string expectedExceptionMessage)
+    {
+        var exampleBankAccount = _fixture.GetValidBankAccount();
+        input.Id = exampleBankAccount.Id;
+        var repositoryMock = _fixture.GetRepositoryMock();
+        var unitOfWorkMock = _fixture.GetUnitOfWorkMock();
+
+        repositoryMock.Setup(x => x.Get(
+            exampleBankAccount.Id,
+            It.IsAny<CancellationToken>())
+        ).ReturnsAsync(exampleBankAccount);
+
+        var useCase = new UseCase.UpdateBankAccount(
+            repositoryMock.Object,
+            unitOfWorkMock.Object
+        );
+        var task = async () 
+            => await useCase.Handle(input, CancellationToken.None);
+
+        await task.Should().ThrowAsync<EntityValidationException>()
+            .WithMessage(expectedExceptionMessage);
+            
+        repositoryMock.Verify(x => x.Get(
+            exampleBankAccount.Id,
+            It.IsAny<CancellationToken>()),
+            Times.Once());
 
     }
 }

@@ -4,8 +4,6 @@ using MediatR;
 namespace Financial.Application.UseCases.BankAccount.UpdateBankAccount;
 public class UpdateBankAccountInput : IRequest<BankAccountModelOutput>
 {
-
-
     public Guid Id { get; set; }
     public string Name { get; set; }
     public int? OpeningBalance { get; set; }
