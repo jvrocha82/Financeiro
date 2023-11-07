@@ -15,13 +15,6 @@ public class DeleteBankAccountTest
     public DeleteBankAccountTest(DeleteBankAccountTestFixture fixture)
     => _fixture = fixture;
 
-    [Fact(DisplayName = nameof(TestValidationResult))]
-    [Trait("Application", "DeleteBankAccunt - Use Cases")]
-    public void TestValidationResult()
-    {
-        var a = "aa";
-        a.Should().Be("aa");
-    }
 
     [Fact(DisplayName = nameof(DeleteBankAccount))]
     [Trait("Application", "DeleteBankAccunt - Use Cases")]
