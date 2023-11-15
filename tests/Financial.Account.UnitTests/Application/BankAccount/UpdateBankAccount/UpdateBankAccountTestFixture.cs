@@ -1,5 +1,4 @@
 ﻿using Financial.Application.Interfaces;
-using Financial.Application.UseCases.BankAccount.CreateBankAccount;
 using Financial.Application.UseCases.BankAccount.UpdateBankAccount;
 using Financial.Domain.Repository;
 using Financial.UnitTests.Common;
