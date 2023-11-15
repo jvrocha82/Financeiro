@@ -33,7 +33,7 @@ public class ListBankAccountTest
                 currentPage: input.Page,
                 perPage: input.PerPage,
                 items: (IReadOnlyList<DomainEntity.BankAccount>)bankAccountExampleList,
-                total: 70
+                total: (new Random()).Next(50, 200)
 
             );
         repositoryMock.Setup(x => x.Search(
@@ -66,6 +66,55 @@ public class ListBankAccountTest
             (outputItem.Id != Guid.Empty).Should().BeTrue();
             (outputItem.CreatedAt != default).Should().BeTrue();
         });
+        repositoryMock.Verify(x => x.Search(
+            It.Is<SearchInput>(
+                searchInput => searchInput.Page == input.Page
+                && searchInput.PerPage == input.PerPage
+                && searchInput.OrderBy == input.Sort
+                && searchInput.Order == input.Dir
+                ),
+            It.IsAny<CancellationToken>()
+            ), Times.Once);
+    }
+    [Fact(DisplayName = nameof(ListOkWhenEmpty))]
+    [Trait("Application", "ListBankAccount - Use Cases")]
+    public async Task ListOkWhenEmpty()
+    {
+        var repositoryMock = _fixture.GetRepositoryMock();
+        var input = new UseCase.ListBankAccountInput(
+            page: 2,
+            perPage: 15,
+            search: "search-example",
+            sort: "name",
+            dir: SearchOrder.Asc
+
+            );
+        var outputRepositorySearch = new SearchOutput<DomainEntity.BankAccount>(
+                currentPage: input.Page,
+                perPage: input.PerPage,
+                items: (new List<DomainEntity.BankAccount>()).AsReadOnly(),
+                total: 0
+
+            );
+        repositoryMock.Setup(x => x.Search(
+            It.Is<SearchInput>(
+                searchInput => searchInput.Page == input.Page
+                && searchInput.PerPage == input.PerPage
+                && searchInput.OrderBy == input.Sort
+                && searchInput.Order == input.Dir
+                ),
+            It.IsAny<CancellationToken>()
+            )).ReturnsAsync(outputRepositorySearch);
+
+        var useCase = new UseCase.ListBankAccount(repositoryMock.Object);
+        var output = await useCase.Handle(input, CancellationToken.None);
+
+        output.Should().NotBeNull();
+        output.Page.Should().Be(outputRepositorySearch.CurrentPage);
+        output.PerPage.Should().Be(outputRepositorySearch.PerPage);
+        output.Total.Should().Be(0);
+        output.Items.Should().HaveCount(0);
+  
         repositoryMock.Verify(x => x.Search(
             It.Is<SearchInput>(
                 searchInput => searchInput.Page == input.Page
