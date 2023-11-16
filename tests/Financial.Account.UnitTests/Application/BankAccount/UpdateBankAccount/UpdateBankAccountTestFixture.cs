@@ -1,6 +1,7 @@
 ﻿using Financial.Application.Interfaces;
 using Financial.Application.UseCases.BankAccount.UpdateBankAccount;
 using Financial.Domain.Repository;
+using Financial.UnitTests.Application.BankAccount.Common;
 using Financial.UnitTests.Common;
 using Moq;
 using Xunit;
@@ -14,21 +15,10 @@ public class UpdateBankAccountTestFixtureCollection
     : ICollectionFixture<UpdateBankAccountTestFixture>
 { }
 public class UpdateBankAccountTestFixture
-    : BaseFixture
+    : BankAccountUseCasesBaseFixture
 {
 
-    public string GetValidName()
-    {
-        var randomName = "";
 
-        while (randomName.Length < 3)
-            randomName = Faker.Commerce.Categories(1)[0];
-
-        if (randomName.Length > 255)
-            randomName = randomName[..255];
-
-        return randomName;
-    }
     public int GetValidOpeningBalance() => new Random().Next();
 
     public bool GetRandomBoolean() => new Random().NextDouble() < 0.5;

@@ -1,6 +1,7 @@
 ﻿using Financial.Application.Interfaces;
 using Financial.Application.UseCases.BankAccount.CreateBankAccount;
 using Financial.Domain.Repository;
+using Financial.UnitTests.Application.BankAccount.Common;
 using Financial.UnitTests.Common;
 using Moq;
 using Xunit;
@@ -11,25 +12,8 @@ namespace Financial.UnitTests.Application.BankAccount.CreateBankAccount;
 public class CreateAccountTestFixtureCollection
     : ICollectionFixture<CreateBankAccountTestFixture>
 { }
-public class CreateBankAccountTestFixture : BaseFixture
+public class CreateBankAccountTestFixture : BankAccountUseCasesBaseFixture
 {
-    public string GetValidName()
-    {
-        var randomName = "";
-
-        while (randomName.Length < 3)
-            randomName = Faker.Commerce.Categories(1)[0];
-
-        if (randomName.Length > 255)
-            randomName = randomName[..255];
-
-        return randomName;
-    }
-    public static int GetValidOpeningBalance() => new Random().Next();
-
-    public static bool GetRandomBoolean() => new Random().NextDouble() < 0.5;
-    public static Guid GetValidUserId() => Guid.NewGuid();
-
     public CreateBankAccountInput GetInput()
         => new(
             GetValidUserId(),
@@ -61,11 +45,7 @@ public class CreateBankAccountTestFixture : BaseFixture
         return invalidInputNegativeOpeningBalance;
     }
 
-    public static Mock<IBankAccountRepository> GetRepositoryMock()
-        => new();
 
-    public static Mock<IUnitOfWork> GetUnitOfWorkMock()
-        => new();
 
 
 }

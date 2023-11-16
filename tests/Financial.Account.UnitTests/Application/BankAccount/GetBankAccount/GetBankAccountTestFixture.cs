@@ -1,4 +1,5 @@
 ﻿using Financial.Domain.Repository;
+using Financial.UnitTests.Application.BankAccount.Common;
 using Financial.UnitTests.Common;
 using Moq;
 using Xunit;
@@ -8,29 +9,8 @@ namespace Financial.UnitTests.Application.BankAccount.GetBankAccount;
 public class GetAccountTestFistureCollection :
    ICollectionFixture<GetBankAccountTestFixture>
 { }
-public class GetBankAccountTestFixture : BaseFixture
+public class GetBankAccountTestFixture : BankAccountUseCasesBaseFixture
 {
-    public Mock<IBankAccountRepository> GetRepositoryMock()
-    => new();
-
-    public string GetValidName()
-    {
-        var randomName = "";
-
-        while (randomName.Length < 3)
-            randomName = Faker.Commerce.Categories(1)[0];
-
-        if (randomName.Length > 255)
-            randomName = randomName[..255];
-
-        return randomName;
-    }
-    public decimal GetValidOpeningBalance()
-    {
-        var rand = new Random();
-        return new decimal(rand.NextDouble());
-    }
-
     public DomainEntity.User GetValidUser() => new(
         GetValidName(),
         true

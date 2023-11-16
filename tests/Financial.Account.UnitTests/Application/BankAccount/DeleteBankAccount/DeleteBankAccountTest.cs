@@ -22,8 +22,8 @@ public class DeleteBankAccountTest
     public async Task DeleteBankAccunt()
     {
         //throw new NotImplementedException();
-        var repositoryMock = DeleteBankAccountTestFixture.GetRepositoryMock();
-        var unitOfWorkMock = DeleteBankAccountTestFixture.GetUnitOfWorkMock();
+        var repositoryMock = _fixture.GetRepositoryMock();
+        var unitOfWorkMock = _fixture.GetUnitOfWorkMock();
         var bankAccuntExample = _fixture.GetValidBankAccount();
 
         repositoryMock.Setup(x => x.Get(

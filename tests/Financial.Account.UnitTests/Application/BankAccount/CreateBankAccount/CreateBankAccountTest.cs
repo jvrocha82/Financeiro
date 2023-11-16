@@ -21,8 +21,8 @@ public class CreateBankAccountTest
     [Trait("Application", "CreateBankAccount - Use Cases")]
     public async void CreateBankAccount()
     {
-        var repositoryMock = CreateBankAccountTestFixture.GetRepositoryMock();
-        var unitOfWorkMock = CreateBankAccountTestFixture.GetUnitOfWorkMock();
+        var repositoryMock = _fixture.GetRepositoryMock();
+        var unitOfWorkMock = _fixture.GetUnitOfWorkMock();
 
         var useCase = new UseCases.CreateBankAccount(
                 repositoryMock.Object,
@@ -68,8 +68,8 @@ public class CreateBankAccountTest
         string exceptionMessage)
     {
         var useCase = new UseCases.CreateBankAccount(
-            CreateBankAccountTestFixture.GetRepositoryMock().Object,
-            CreateBankAccountTestFixture.GetUnitOfWorkMock().Object
+            _fixture.GetRepositoryMock().Object,
+            _fixture.GetUnitOfWorkMock().Object
         );
 
         Func<Task> task = async () => await useCase.Handle(
