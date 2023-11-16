@@ -18,10 +18,6 @@ public class UpdateBankAccountTestFixture
 {
 
 
-    public int GetValidOpeningBalance() => new Random().Next();
-
-    public bool GetRandomBoolean() => new Random().NextDouble() < 0.5;
-    public Guid GetValidUserId() => Guid.NewGuid();
     public UpdateBankAccountInput GetValidBankAccountInput(Guid? id = null) => new (
                 id ?? Guid.NewGuid(),
                 GetValidName(),
@@ -57,10 +53,6 @@ public class UpdateBankAccountTestFixture
         invalidInputNegativeOpeningBalance.OpeningBalance *= -1;
         return invalidInputNegativeOpeningBalance;
     }
-    public Mock<IBankAccountRepository> GetRepositoryMock()
-        => new();
 
-    public Mock<IUnitOfWork> GetUnitOfWorkMock()
-        => new();
 
 }
