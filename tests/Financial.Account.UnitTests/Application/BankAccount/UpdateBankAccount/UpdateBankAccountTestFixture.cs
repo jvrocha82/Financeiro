@@ -2,7 +2,6 @@
 using Financial.Application.UseCases.BankAccount.UpdateBankAccount;
 using Financial.Domain.Repository;
 using Financial.UnitTests.Application.BankAccount.Common;
-using Financial.UnitTests.Common;
 using Moq;
 using Xunit;
 using DomainEntity = Financial.Domain.Entity;

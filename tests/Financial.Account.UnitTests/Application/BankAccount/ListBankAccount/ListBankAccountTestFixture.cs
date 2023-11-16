@@ -1,7 +1,4 @@
-﻿using Financial.Domain.Repository;
-using Financial.UnitTests.Application.BankAccount.Common;
-using Financial.UnitTests.Common;
-using Moq;
+﻿using Financial.UnitTests.Application.BankAccount.Common;
 using Xunit;
 using DomainEntity = Financial.Domain.Entity;
 

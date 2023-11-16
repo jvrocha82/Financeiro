@@ -1,9 +1,5 @@
-﻿using Financial.Application.Interfaces;
-using Financial.Application.UseCases.BankAccount.CreateBankAccount;
-using Financial.Domain.Repository;
+﻿using Financial.Application.UseCases.BankAccount.CreateBankAccount;
 using Financial.UnitTests.Application.BankAccount.Common;
-using Financial.UnitTests.Common;
-using Moq;
 using Xunit;
 
 namespace Financial.UnitTests.Application.BankAccount.CreateBankAccount;
