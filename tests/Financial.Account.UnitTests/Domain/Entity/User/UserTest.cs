@@ -96,4 +96,34 @@ public class UserTest
             .WithMessage("Name should be less or equal 255 characters long");
     }
 
+    [Fact(DisplayName = nameof(UpdateOnlyName))]
+    [Trait("Domain", "User - Aggregate")]
+
+    public void UpdateOnlyName()
+    {
+        var user = _userTestFixture.GetValidUser();
+        var newUserName = _userTestFixture.GetValidName();
+
+        user.Update(newUserName);
+
+        
+        user.Name.Should().Be(newUserName);
+    }
+
+    [Theory(DisplayName = nameof(UpdateErrorWhenEmptyValue))]
+    [Trait("Domain", "User - Aggregate")]
+    [InlineData("     ")]
+    [InlineData("")]
+    [InlineData(null)]
+
+    public void UpdateErrorWhenEmptyValue(string? wrongName)
+    {
+        var user = _userTestFixture.GetValidUser();
+
+        Action action = () => user.Update(wrongName!);
+
+        action.Should().Throw<EntityValidationException>()
+            .WithMessage("Name should not be empty or null");
+    }
+
 }
