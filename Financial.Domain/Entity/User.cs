@@ -30,5 +30,15 @@ public class User : AggregateRoot
         Name = name;
         Validate();
     }
+    public void Activate()
+    {
+        IsActive = true;
+        Validate();
+    }
+    public void Deactivate()
+    {
+        IsActive = false;
+        Validate();
+    }
 
 }

@@ -92,7 +92,7 @@ public class BankAccountTest
     }
 
 
-    #endregion[OpeningBalanceIsNegativeValidation]
+    #endregion[OpeningBalanceIsNegativeValidation]f
 
     #region[IsActiveValidation]
     [Theory(DisplayName = nameof(Instantiate))]

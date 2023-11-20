@@ -17,9 +17,9 @@ public class UserTestFixture : BaseFixture
 
         return randomName;
     }
-    public DomainEntity.User GetValidUser() => new(
+    public DomainEntity.User GetValidUser(bool isActive = true) => new(
         GetValidName(),
-        true
+        isActive
     );
 }
 [CollectionDefinition(nameof(UserTestFixture))]

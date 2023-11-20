@@ -126,4 +126,33 @@ public class UserTest
             .WithMessage("Name should not be empty or null");
     }
 
+    [Fact(DisplayName = nameof(UpdateActiveUser))]
+    [Trait("Domain", "User - Aggregate")]
+
+    public void UpdateActiveUser()
+    {
+        var user = _userTestFixture.GetValidUser(false);
+
+        user.Activate();
+        
+        user.Should().NotBeNull();
+        user.IsActive.Should().BeTrue();
+
+    }
+    [Fact(DisplayName = nameof(UpdateDeactivateUser))]
+    [Trait("Domain", "User - Aggregate")]
+
+    public void UpdateDeactivateUser()
+    {
+        var user = _userTestFixture.GetValidUser();
+
+        user.Deactivate();
+
+        user.Should().NotBeNull();
+        user.IsActive.Should().BeFalse();
+    }
+
+
+
+
 }
