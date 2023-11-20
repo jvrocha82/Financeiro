@@ -30,8 +30,6 @@ public class UpdateBankAccountTest
     {
         var repositoryMock = _fixture.GetRepositoryMock();
         var unitOfWorkMock = _fixture.GetUnitOfWorkMock();
-         
-
 
         repositoryMock.Setup(x => x.Get(
             exampleBankAccount.Id,
@@ -44,6 +42,7 @@ public class UpdateBankAccountTest
         );
 
         BankAccountModelOutput output  = await useCase.Handle(input, CancellationToken.None);
+
         output.Should().NotBeNull();
         output.Name.Should().Be(input.Name);
         output.OpeningBalance.Should().Be(input.OpeningBalance);

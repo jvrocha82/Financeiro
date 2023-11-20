@@ -1,12 +1,4 @@
-﻿using Financial.Application.UseCases.BankAccount.UpdateBankAccount;
-using Financial.UnitTests.Application.BankAccount.CreateBankAccount;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Financial.UnitTests.Application.BankAccount.UpdateBankAccount;
+﻿namespace Financial.UnitTests.Application.BankAccount.UpdateBankAccount;
 public class UpdateBankAccountTestDataGenerator
 {
     public static IEnumerable<object[]> GetBankAccountToUpdate(int times = 10)

@@ -1,5 +1,6 @@
 ﻿using Financial.Domain.SeedWork;
 using Financial.Domain.Validation;
+using System.Xml.Linq;
 
 namespace Financial.Domain.Entity;
 public class User : AggregateRoot
@@ -23,6 +24,11 @@ public class User : AggregateRoot
         DomainValidation.NotNullOrEmpty(Name, nameof(Name));
         DomainValidation.MinLength(Name, 3, nameof(Name));
         DomainValidation.MaxLength(Name, 255, nameof(Name));
+    }
+    public void Update(string name)
+    {
+        Name = name;
+        Validate();
     }
 
 }
