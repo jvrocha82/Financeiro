@@ -21,6 +21,7 @@ public class GetBankAccountTest
     {
         var repositoryMock = _fixture.GetRepositoryMock();
         var exampleBankAccount = _fixture.GetValidBankAccount();
+
         repositoryMock.Setup(x => x.Get(
             It.IsAny<Guid>(),
             It.IsAny<CancellationToken>()

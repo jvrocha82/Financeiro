@@ -1,7 +1,7 @@
 ﻿
 using DomainEntity = Financial.Domain.Entity;
 namespace Financial.Application.UseCases.User.UpdateUser;
-public class UpdateUserOutput
+public class GetUserOutput
 {
     
 
@@ -10,7 +10,7 @@ public class UpdateUserOutput
     public bool IsActive { get; set; }
     public DateTime CreatedAt { get; set; }
 
-    public UpdateUserOutput(
+    public GetUserOutput(
         Guid id,
         string name,
         bool isActive,
@@ -22,7 +22,7 @@ public class UpdateUserOutput
         CreatedAt = createdAt;
     }
 
-        public static UpdateUserOutput FromUser(DomainEntity.User user)
+        public static GetUserOutput FromUser(DomainEntity.User user)
         => new(
                 user.Id,
                 user.Name,

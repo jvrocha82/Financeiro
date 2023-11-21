@@ -9,11 +9,9 @@ public class GetBankAccount : IGetBankAccount
     public GetBankAccount(IBankAccountRepository bankAccountRepository)
     => _bankAccountRepository = bankAccountRepository;
 
-
     public async Task<BankAccountModelOutput> Handle(
         GetBankAccountInput request,
-        CancellationToken cancellationToken
-    )
+        CancellationToken cancellationToken)
     {
         var bankAccount = await _bankAccountRepository.Get(request.Id, cancellationToken);
 

@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Financial.Application.UseCases.User.UpdateUser;
-public class UpdateUserInput : IRequest<UpdateUserOutput>
+public class UpdateUserInput : IRequest<GetUserOutput>
 {
     public Guid Id { get; set; }
     public string Name { get; set; }

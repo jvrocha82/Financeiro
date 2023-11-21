@@ -37,7 +37,7 @@ public class UpdateUserTest
             unitOfWorkMock.Object
         );
 
-        UpdateUserOutput output = await useCase.Handle(input, CancellationToken.None);
+        GetUserOutput output = await useCase.Handle(input, CancellationToken.None);
         output.Should().NotBeNull();
         output.Name.Should().Be(input.Name);
 

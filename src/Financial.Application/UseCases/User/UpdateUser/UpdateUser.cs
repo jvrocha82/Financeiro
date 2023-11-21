@@ -10,7 +10,7 @@ public class UpdateUser
     public UpdateUser(IUserRepository userRepository, IUnitOfWork unitOfWork)
         => (_userRepository, _unitOfWork) = (userRepository, unitOfWork);
 
-    public async Task<UpdateUserOutput> Handle(UpdateUserInput request, CancellationToken cancellationToken)
+    public async Task<GetUserOutput> Handle(UpdateUserInput request, CancellationToken cancellationToken)
     {
         var user = await _userRepository.Get(request.Id, cancellationToken);
         user.Update(request.Name);
@@ -18,7 +18,7 @@ public class UpdateUser
         await _userRepository.Update(user, cancellationToken);
         await _unitOfWork.Commit(cancellationToken);
 
-        return UpdateUserOutput.FromUser(user);
+        return GetUserOutput.FromUser(user);
 
     }
     
