@@ -1,0 +1,17 @@
+C:\Users\jvroc\source\repos\Financeiro\src\Financial.Infra\obj\Debug\net7.0\Financial.Infra.Data.EF.csproj.AssemblyReference.cache
+C:\Users\jvroc\source\repos\Financeiro\src\Financial.Infra\obj\Debug\net7.0\Financial.Infra.Data.EF.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\jvroc\source\repos\Financeiro\src\Financial.Infra\obj\Debug\net7.0\Financial.Infra.Data.EF.AssemblyInfoInputs.cache
+C:\Users\jvroc\source\repos\Financeiro\src\Financial.Infra\obj\Debug\net7.0\Financial.Infra.Data.EF.AssemblyInfo.cs
+C:\Users\jvroc\source\repos\Financeiro\src\Financial.Infra\obj\Debug\net7.0\Financial.Infra.Data.EF.csproj.CoreCompileInputs.cache
+C:\Users\jvroc\source\repos\Financeiro\src\Financial.Infra\bin\Debug\net7.0\Financial.Infra.Data.EF.deps.json
+C:\Users\jvroc\source\repos\Financeiro\src\Financial.Infra\bin\Debug\net7.0\Financial.Infra.Data.EF.dll
+C:\Users\jvroc\source\repos\Financeiro\src\Financial.Infra\bin\Debug\net7.0\Financial.Infra.Data.EF.pdb
+C:\Users\jvroc\source\repos\Financeiro\src\Financial.Infra\bin\Debug\net7.0\Financial.Application.dll
+C:\Users\jvroc\source\repos\Financeiro\src\Financial.Infra\bin\Debug\net7.0\Financial.Domain.dll
+C:\Users\jvroc\source\repos\Financeiro\src\Financial.Infra\bin\Debug\net7.0\Financial.Domain.pdb
+C:\Users\jvroc\source\repos\Financeiro\src\Financial.Infra\bin\Debug\net7.0\Financial.Application.pdb
+C:\Users\jvroc\source\repos\Financeiro\src\Financial.Infra\obj\Debug\net7.0\Financial.Infra.Data.EF.csproj.CopyComplete
+C:\Users\jvroc\source\repos\Financeiro\src\Financial.Infra\obj\Debug\net7.0\Financial.Infra.Data.EF.dll
+C:\Users\jvroc\source\repos\Financeiro\src\Financial.Infra\obj\Debug\net7.0\refint\Financial.Infra.Data.EF.dll
+C:\Users\jvroc\source\repos\Financeiro\src\Financial.Infra\obj\Debug\net7.0\Financial.Infra.Data.EF.pdb
+C:\Users\jvroc\source\repos\Financeiro\src\Financial.Infra\obj\Debug\net7.0\ref\Financial.Infra.Data.EF.dll

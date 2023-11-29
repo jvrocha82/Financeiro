@@ -1,0 +1,200 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\jvroc\\source\\repos\\Financeiro\\src\\Financial.Infra\\Financial.Infra.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\jvroc\\source\\repos\\Financeiro\\Financial.Domain\\Financial.Domain.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\jvroc\\source\\repos\\Financeiro\\Financial.Domain\\Financial.Domain.csproj",
+        "projectName": "Financial.Domain",
+        "projectPath": "C:\\Users\\jvroc\\source\\repos\\Financeiro\\Financial.Domain\\Financial.Domain.csproj",
+        "packagesPath": "C:\\Users\\jvroc\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\jvroc\\source\\repos\\Financeiro\\Financial.Domain\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\jvroc\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.402\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\jvroc\\source\\repos\\Financeiro\\src\\Financial.Application\\Financial.Application.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\jvroc\\source\\repos\\Financeiro\\src\\Financial.Application\\Financial.Application.csproj",
+        "projectName": "Financial.Application",
+        "projectPath": "C:\\Users\\jvroc\\source\\repos\\Financeiro\\src\\Financial.Application\\Financial.Application.csproj",
+        "packagesPath": "C:\\Users\\jvroc\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\jvroc\\source\\repos\\Financeiro\\src\\Financial.Application\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\jvroc\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {
+              "C:\\Users\\jvroc\\source\\repos\\Financeiro\\Financial.Domain\\Financial.Domain.csproj": {
+                "projectPath": "C:\\Users\\jvroc\\source\\repos\\Financeiro\\Financial.Domain\\Financial.Domain.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "dependencies": {
+            "FluentValidation": {
+              "target": "Package",
+              "version": "[11.8.0, )"
+            },
+            "MediatR": {
+              "target": "Package",
+              "version": "[12.1.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.402\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\jvroc\\source\\repos\\Financeiro\\src\\Financial.Infra\\Financial.Infra.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\jvroc\\source\\repos\\Financeiro\\src\\Financial.Infra\\Financial.Infra.csproj",
+        "projectName": "Financial.Infra",
+        "projectPath": "C:\\Users\\jvroc\\source\\repos\\Financeiro\\src\\Financial.Infra\\Financial.Infra.csproj",
+        "packagesPath": "C:\\Users\\jvroc\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\jvroc\\source\\repos\\Financeiro\\src\\Financial.Infra\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\jvroc\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {
+              "C:\\Users\\jvroc\\source\\repos\\Financeiro\\Financial.Domain\\Financial.Domain.csproj": {
+                "projectPath": "C:\\Users\\jvroc\\source\\repos\\Financeiro\\Financial.Domain\\Financial.Domain.csproj"
+              },
+              "C:\\Users\\jvroc\\source\\repos\\Financeiro\\src\\Financial.Application\\Financial.Application.csproj": {
+                "projectPath": "C:\\Users\\jvroc\\source\\repos\\Financeiro\\src\\Financial.Application\\Financial.Application.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[7.0.14, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.402\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
