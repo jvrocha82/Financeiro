@@ -36,6 +36,12 @@ public class BankAccountRepositoryTestFixture
         GetValidName(),
         GetValidOpeningBalance());
 
+
+    public List<BankAccount> GetExampleBankAccountList(int length = 10)
+  => Enumerable.Range(1, length)
+        .Select(_ => GetExampleBankAccount())
+        .ToList();
+
     public FinancialDbContext CreateDbContext()
         => new (
             new DbContextOptionsBuilder<FinancialDbContext>()

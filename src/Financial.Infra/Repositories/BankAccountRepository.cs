@@ -1,4 +1,5 @@
-﻿using Financial.Domain.Entity;
+﻿using Financial.Application.Exceptions;
+using Financial.Domain.Entity;
 using Financial.Domain.Repository;
 using Financial.Domain.SeedWork.SearchableRepository;
 using Microsoft.EntityFrameworkCore;
@@ -30,13 +31,21 @@ public class BankAccountRepository
         await _banksAccount.AddAsync(aggregate, cancellationToken);
     }
 
+    public async Task<BankAccount> Get(Guid id, CancellationToken cancellationToken)
+    {
+       var bankAccount =  await _banksAccount.FindAsync(
+        new object[] { id },
+        cancellationToken);
 
+        NotFoundException.ThrowIfNull(bankAccount, $"BankAccount '{id}' not found.");
+        
+        return bankAccount!;
+    }
     public Task Delete(BankAccount aggregate, CancellationToken cancellationToken)
     => throw new NotImplementedException();
     
 
-    public Task<BankAccount> Get(Guid id, CancellationToken cancellationToken)
-    => throw new NotImplementedException();
+
     
     
     public Task<SearchOutput<BankAccount>> Search(SearchInput input, CancellationToken cancellationToken)
