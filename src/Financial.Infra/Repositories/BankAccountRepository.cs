@@ -41,8 +41,8 @@ public class BankAccountRepository
         
         return bankAccount!;
     }
-    public Task Delete(BankAccount aggregate, CancellationToken cancellationToken)
-    => throw new NotImplementedException();
+    public Task Delete(BankAccount aggregate, CancellationToken _)
+    => Task.FromResult(_banksAccount.Remove(aggregate));
     
 
 
@@ -50,9 +50,9 @@ public class BankAccountRepository
     
     public Task<SearchOutput<BankAccount>> Search(SearchInput input, CancellationToken cancellationToken)
     => throw new NotImplementedException();
-    
 
-    public Task Update(BankAccount aggregate, CancellationToken cancellationToken)
-    => throw new NotImplementedException();
+
+    public Task Update(BankAccount aggregate, CancellationToken _)
+    => Task.FromResult(_banksAccount.Update(aggregate));
     
 }

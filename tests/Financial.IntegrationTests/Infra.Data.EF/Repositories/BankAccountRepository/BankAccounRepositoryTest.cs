@@ -50,7 +50,9 @@ public class BankAccounRepositoryTest
 
         await dbContext.AddRangeAsync(exampleBankAccountList);
         await dbContext.SaveChangesAsync(CancellationToken.None);
-        var bankAccountRepository = new Repository.BankAccountRepository(dbContext);
+        var bankAccountRepository = new Repository.BankAccountRepository(
+            _fixture.CreateDbContext()
+            );
 
 
 
@@ -76,7 +78,7 @@ public class BankAccounRepositoryTest
 
         await dbContext.AddRangeAsync(_fixture.GetExampleBankAccountList(15));
         await dbContext.SaveChangesAsync(CancellationToken.None);
-        var bankAccountRepository = new Repository.BankAccountRepository(dbContext);
+        var bankAccountRepository = new Repository.BankAccountRepository(_fixture.CreateDbContext());
 
 
 
@@ -89,6 +91,61 @@ public class BankAccounRepositoryTest
             .ThrowAsync<NotFoundException>()
             .WithMessage($"BankAccount '{exampleId}' not found.");
 
+
+    }
+
+
+    [Fact(DisplayName = nameof(Update))]
+    [Trait("Integration/infra.Data", "BankAccountRepository - Repositories")]
+
+    public async Task Update()
+    {
+        FinancialDbContext dbContext = _fixture.CreateDbContext();
+        var exampleBankAccount = _fixture.GetExampleBankAccount();
+        var newBankAccountValues = _fixture.GetExampleBankAccount();
+        var exampleBankAccountList = _fixture.GetExampleBankAccountList(15);
+        exampleBankAccountList.Add(exampleBankAccount);
+
+        await dbContext.AddRangeAsync(exampleBankAccountList);
+        await dbContext.SaveChangesAsync(CancellationToken.None);
+        var bankAccountRepository = new Repository.BankAccountRepository(dbContext);
+        
+        exampleBankAccount.Update(newBankAccountValues.Name, newBankAccountValues.OpeningBalance);
+        await bankAccountRepository.Update(exampleBankAccount, CancellationToken.None);
+        await dbContext.SaveChangesAsync();
+
+        var dbBankAccount = await (_fixture.CreateDbContext())
+            .BankAccount.FindAsync(exampleBankAccount.Id);
+        
+        dbBankAccount.Should().NotBeNull();
+        dbBankAccount.Id.Should().Be(exampleBankAccount.Id);
+        dbBankAccount.Name.Should().Be(exampleBankAccount.Name);
+        dbBankAccount.OpeningBalance.Should().Be(exampleBankAccount.OpeningBalance);
+        dbBankAccount.CreatedAt.Should().Be(exampleBankAccount.CreatedAt);
+
+    }
+    [Fact(DisplayName = nameof(Delete))]
+    [Trait("Integration/infra.Data", "BankAccountRepository - Repositories")]
+
+    public async Task Delete()
+    {
+        FinancialDbContext dbContext = _fixture.CreateDbContext();
+        var exampleBankAccount = _fixture.GetExampleBankAccount();
+        var exampleBankAccountList = _fixture.GetExampleBankAccountList(15);
+        exampleBankAccountList.Add(exampleBankAccount);
+
+        await dbContext.AddRangeAsync(exampleBankAccountList);
+        await dbContext.SaveChangesAsync(CancellationToken.None);
+        var bankAccountRepository = new Repository.BankAccountRepository(dbContext);
+
+        await bankAccountRepository.Delete(exampleBankAccount, CancellationToken.None);
+        await dbContext.SaveChangesAsync();
+
+        var dbBankAccount = await (_fixture.CreateDbContext())
+            .BankAccount.FindAsync(exampleBankAccount.Id);
+
+        dbBankAccount.Should().BeNull();
+    
 
     }
 
