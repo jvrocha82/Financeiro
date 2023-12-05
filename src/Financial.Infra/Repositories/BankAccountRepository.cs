@@ -43,14 +43,18 @@ public class BankAccountRepository
     }
     public Task Delete(BankAccount aggregate, CancellationToken _)
     => Task.FromResult(_banksAccount.Remove(aggregate));
-    
 
 
-    
-    
-    public Task<SearchOutput<BankAccount>> Search(SearchInput input, CancellationToken cancellationToken)
-    => throw new NotImplementedException();
 
+
+
+    public async Task<SearchOutput<BankAccount>> Search(SearchInput input, CancellationToken cancellationToken)
+    {
+        var total = await _banksAccount.CountAsync();
+        var items = await _banksAccount.ToListAsync();
+        return new SearchOutput<BankAccount>(input.Page, input.PerPage, total, items);
+
+    }
 
     public Task Update(BankAccount aggregate, CancellationToken _)
     => Task.FromResult(_banksAccount.Update(aggregate));

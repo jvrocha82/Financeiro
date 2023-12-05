@@ -42,12 +42,17 @@ public class BankAccountRepositoryTestFixture
         .Select(_ => GetExampleBankAccount())
         .ToList();
 
-    public FinancialDbContext CreateDbContext()
-        => new (
+    public FinancialDbContext CreateDbContext(bool preserveData = false)
+    {
+        var context = new FinancialDbContext(
             new DbContextOptionsBuilder<FinancialDbContext>()
             .UseInMemoryDatabase("integration-tests-db")
             .Options
            );
-        
-    
+        if (preserveData == false)
+            context.Database.EnsureDeleted();
+        return context;
+
+    }
+
 }
