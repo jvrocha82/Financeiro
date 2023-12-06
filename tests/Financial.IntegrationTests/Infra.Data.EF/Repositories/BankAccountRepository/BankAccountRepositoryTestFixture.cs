@@ -55,4 +55,12 @@ public class BankAccountRepositoryTestFixture
 
     }
 
+    public List<BankAccount> GetExampleBankAccountListWithNames(List<string> names)
+        => names.Select(name =>
+        {
+            var bankAccount = GetExampleBankAccount();
+            bankAccount.Update(name);
+            return bankAccount;
+        }).ToList();
+
 }

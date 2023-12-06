@@ -48,11 +48,17 @@ public class BankAccountRepository
 
 
 
-    public async Task<SearchOutput<BankAccount>> Search(SearchInput input, CancellationToken cancellationToken)
+    public async Task<SearchOutput<BankAccount>> Search(
+        SearchInput input, 
+        CancellationToken cancellationToken)
     {
         var toSkip = (input.Page - 1) * input.PerPage;
-        var total = await _banksAccount.CountAsync();
-        var items = await _banksAccount.AsNoTracking()
+        var query = _banksAccount.AsNoTracking();
+        if (!String.IsNullOrEmpty(input.Search))
+            query = query.Where(x => x.Name.Contains(input.Search));
+        
+        var total = await query.CountAsync();
+        var items = await query
             .Skip(toSkip)
             .Take(input.PerPage)
             .ToListAsync();

@@ -249,4 +249,65 @@ public class BankAccounRepositoryTest
             outputItem.CreatedAt.Should().Be(exampleItem.CreatedAt);
         }
     }
+    [Theory(DisplayName = nameof(SearchReturnsPaginated))]
+    [Trait("Integration/infra.Data", "BankAccountRepository - Repositories")]
+    [InlineData("Itau", 1, 5, 1, 1)]
+    [InlineData("Bradesco", 1, 5, 1, 1)]
+    [InlineData("Santander", 1, 5, 1, 1)]
+    [InlineData("NuBank Brasil", 1, 5, 1, 1)]
+    [InlineData("Neon", 1, 2, 1, 1)]
+    [InlineData("Inter", 2, 2, 1, 3)]
+    [InlineData("Banco do Brasil Other", 1, 3, 0, 0)]
+    [InlineData("Brasil", 2, 3, 2, 5)]
+    
+
+    public async Task SearchByText(
+        string search,
+        int page,
+        int perPage,
+        int expectedQuantityItemsReturned,
+        int expectedQuantityTotalItems
+        )
+    {
+        FinancialDbContext dbContext = _fixture.CreateDbContext();
+        var exampleBankAccountList = 
+            _fixture.GetExampleBankAccountListWithNames(new List<string>()
+            {
+                "Banco do Brasil",
+                "Itau",
+                "Bradesco",
+                "Santander",
+                "Inter",
+                "NuBank Brasil",
+                "Brasil Neon",
+                "Inter Brasil",
+                "NuBank Other",
+                "Pic Pay",
+                "Inter Brasil"
+            });
+
+        await dbContext.AddRangeAsync(exampleBankAccountList);
+        await dbContext.SaveChangesAsync(CancellationToken.None);
+        var bankAccountRepository = new Repository.BankAccountRepository(dbContext);
+        var searchInput = new SearchInput(page, perPage, search, "", SearchOrder.Asc);
+        var output = await bankAccountRepository.Search(searchInput, CancellationToken.None);
+
+        output.Should().NotBeNull();
+        output.Items.Should().NotBeNull();
+        output.CurrentPage.Should().Be(searchInput.Page);
+        output.PerPage.Should().Be(searchInput.PerPage);
+        output.Total.Should().Be(expectedQuantityTotalItems);
+        output.Items.Should().HaveCount(expectedQuantityItemsReturned);
+
+        foreach (BankAccount outputItem in output.Items)
+        {
+            var exampleItem = exampleBankAccountList.Find(
+                bankAccount => bankAccount.Id == outputItem.Id);
+
+            outputItem.Should().NotBeNull();
+            outputItem.Name.Should().Be(exampleItem!.Name);
+            outputItem.OpeningBalance.Should().Be(exampleItem.OpeningBalance);
+            outputItem.CreatedAt.Should().Be(exampleItem.CreatedAt);
+        }
+    }
 }
