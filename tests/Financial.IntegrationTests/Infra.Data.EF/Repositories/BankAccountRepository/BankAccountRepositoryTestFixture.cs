@@ -1,4 +1,5 @@
 ﻿using Financial.Domain.Entity;
+using Financial.Domain.SeedWork.SearchableRepository;
 using Financial.Infra.Data.EF;
 using Financial.IntegrationTests.Base;
 using Microsoft.EntityFrameworkCore;
@@ -41,7 +42,32 @@ public class BankAccountRepositoryTestFixture
   => Enumerable.Range(1, length)
         .Select(_ => GetExampleBankAccount())
         .ToList();
+    public List<BankAccount> GetExampleBankAccountListWithNames(List<string> names)
+    => names.Select(name =>
+    {
+        var bankAccount = GetExampleBankAccount();
+        bankAccount.Update(name);
+        return bankAccount;
+    }).ToList();
 
+    public List<BankAccount> CloneBankAccountListOrderer(
+        List<BankAccount> bankAccountList,
+        string orderBy,
+        SearchOrder order)
+    {
+        var listClone = new List<BankAccount>(bankAccountList);
+        var orderedEnumerable = (orderBy.ToLower(), order)switch
+        {
+            ("name", SearchOrder.Asc) => listClone.OrderBy(x => x.Name),
+            ("name", SearchOrder.Desc) => listClone.OrderByDescending(x => x.Name),
+            ("id", SearchOrder.Asc) => listClone.OrderBy(x => x.Id),
+            ("id", SearchOrder.Desc) => listClone.OrderByDescending(x => x.Id),
+            ("createdat", SearchOrder.Asc) => listClone.OrderBy(x => x.CreatedAt),
+            ("createdat", SearchOrder.Desc) => listClone.OrderByDescending(x => x.CreatedAt),
+            _ => listClone.OrderBy(x => x.Name),
+        };
+        return orderedEnumerable.ToList();
+    }
     public FinancialDbContext CreateDbContext(bool preserveData = false)
     {
         var context = new FinancialDbContext(
@@ -55,12 +81,6 @@ public class BankAccountRepositoryTestFixture
 
     }
 
-    public List<BankAccount> GetExampleBankAccountListWithNames(List<string> names)
-        => names.Select(name =>
-        {
-            var bankAccount = GetExampleBankAccount();
-            bankAccount.Update(name);
-            return bankAccount;
-        }).ToList();
+
 
 }
