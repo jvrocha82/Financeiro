@@ -50,8 +50,12 @@ public class BankAccountRepository
 
     public async Task<SearchOutput<BankAccount>> Search(SearchInput input, CancellationToken cancellationToken)
     {
+        var toSkip = (input.Page - 1) * input.PerPage;
         var total = await _banksAccount.CountAsync();
-        var items = await _banksAccount.ToListAsync();
+        var items = await _banksAccount.AsNoTracking()
+            .Skip(toSkip)
+            .Take(input.PerPage)
+            .ToListAsync();
         return new SearchOutput<BankAccount>(input.Page, input.PerPage, total, items);
 
     }

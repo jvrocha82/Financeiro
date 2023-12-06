@@ -16,8 +16,8 @@ public class BankAccounRepositoryTest
     private readonly BankAccountRepositoryTestFixture _fixture;
 
     public BankAccounRepositoryTest(BankAccountRepositoryTestFixture fixture)
-    =>    _fixture = fixture;
-    
+    => _fixture = fixture;
+
 
     [Fact(DisplayName = nameof(Insert))]
     [Trait("Integration/infra.Data", "BankAccountRepository - Repositories")]
@@ -27,7 +27,7 @@ public class BankAccounRepositoryTest
         FinancialDbContext dbContext = _fixture.CreateDbContext();
         var exampleBankAccount = _fixture.GetExampleBankAccount();
         var bankAccountRepository = new Repository.BankAccountRepository(dbContext);
-        
+
         await bankAccountRepository.Insert(exampleBankAccount, CancellationToken.None);
         await dbContext.SaveChangesAsync();
 
@@ -112,14 +112,14 @@ public class BankAccounRepositoryTest
         await dbContext.AddRangeAsync(exampleBankAccountList);
         await dbContext.SaveChangesAsync(CancellationToken.None);
         var bankAccountRepository = new Repository.BankAccountRepository(dbContext);
-        
+
         exampleBankAccount.Update(newBankAccountValues.Name, newBankAccountValues.OpeningBalance);
         await bankAccountRepository.Update(exampleBankAccount, CancellationToken.None);
         await dbContext.SaveChangesAsync();
 
         var dbBankAccount = await (_fixture.CreateDbContext(true))
             .BankAccount.FindAsync(exampleBankAccount.Id);
-        
+
         dbBankAccount.Should().NotBeNull();
         dbBankAccount!.Id.Should().Be(exampleBankAccount.Id);
         dbBankAccount.Name.Should().Be(exampleBankAccount.Name);
@@ -148,7 +148,7 @@ public class BankAccounRepositoryTest
             .BankAccount.FindAsync(exampleBankAccount.Id);
 
         dbBankAccount.Should().BeNull();
-    
+
 
     }
 
@@ -173,7 +173,7 @@ public class BankAccounRepositoryTest
         output.Total.Should().Be(exampleBankAccountList.Count);
         output.Items.Should().HaveCount(exampleBankAccountList.Count);
 
-        foreach(BankAccount outputItem in output.Items)
+        foreach (BankAccount outputItem in output.Items)
         {
             var exampleItem = exampleBankAccountList.Find(
                 bankAccount => bankAccount.Id == outputItem.Id);
@@ -207,7 +207,46 @@ public class BankAccounRepositoryTest
 
     }
 
+    [Theory(DisplayName = nameof(SearchReturnsPaginated))]
+    [Trait("Integration/infra.Data", "BankAccountRepository - Repositories")]
+    [InlineData(10, 1, 5, 5)]
+    [InlineData(10, 2, 5, 5)]
+    [InlineData(7, 2, 5, 2)]
+    [InlineData(7, 3, 5, 0)]
 
 
+    public async Task SearchReturnsPaginated(
+        int quantityBankAccountToGenerate,
+        int page,
+        int perPage,
+        int expectedQuantityItems
+        )
+    {
+        FinancialDbContext dbContext = _fixture.CreateDbContext();
+        var exampleBankAccountList = _fixture.GetExampleBankAccountList(quantityBankAccountToGenerate);
 
+        await dbContext.AddRangeAsync(exampleBankAccountList);
+        await dbContext.SaveChangesAsync(CancellationToken.None);
+        var bankAccountRepository = new Repository.BankAccountRepository(dbContext);
+        var searchInput = new SearchInput(page, perPage, "", "", SearchOrder.Asc);
+        var output = await bankAccountRepository.Search(searchInput, CancellationToken.None);
+
+        output.Should().NotBeNull();
+        output.Items.Should().NotBeNull();
+        output.CurrentPage.Should().Be(searchInput.Page);
+        output.PerPage.Should().Be(searchInput.PerPage);
+        output.Total.Should().Be(quantityBankAccountToGenerate);
+        output.Items.Should().HaveCount(expectedQuantityItems);
+
+        foreach (BankAccount outputItem in output.Items)
+        {
+            var exampleItem = exampleBankAccountList.Find(
+                bankAccount => bankAccount.Id == outputItem.Id);
+
+            outputItem.Should().NotBeNull();
+            outputItem.Name.Should().Be(exampleItem!.Name);
+            outputItem.OpeningBalance.Should().Be(exampleItem.OpeningBalance);
+            outputItem.CreatedAt.Should().Be(exampleItem.CreatedAt);
+        }
+    }
 }
