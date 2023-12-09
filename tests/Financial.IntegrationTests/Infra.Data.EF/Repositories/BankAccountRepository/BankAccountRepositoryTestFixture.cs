@@ -68,18 +68,7 @@ public class BankAccountRepositoryTestFixture
         };
         return orderedEnumerable.ToList();
     }
-    public FinancialDbContext CreateDbContext(bool preserveData = false)
-    {
-        var context = new FinancialDbContext(
-            new DbContextOptionsBuilder<FinancialDbContext>()
-            .UseInMemoryDatabase("integration-tests-db")
-            .Options
-           );
-        if (preserveData == false)
-            context.Database.EnsureDeleted();
-        return context;
 
-    }
 
 
 

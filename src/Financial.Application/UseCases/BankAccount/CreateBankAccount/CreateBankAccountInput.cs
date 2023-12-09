@@ -5,11 +5,11 @@ namespace Financial.Application.UseCases.BankAccount.CreateBankAccount;
 public class CreateBankAccountInput : IRequest<BankAccountModelOutput>
 {
     public Guid UserId { get; set; }
-    public int OpeningBalance { get; set; }
+    public decimal OpeningBalance { get; set; }
     public string Name { get; set; }
     public bool IsActive { get; set; }
     public bool OpeningBalanceIsNegative { get; set; }
-    public CreateBankAccountInput(Guid userId, string name, int openingBalance, bool openingBalanceIsNegative = false, bool isActive = true)
+    public CreateBankAccountInput(Guid userId, string name, decimal openingBalance, bool openingBalanceIsNegative = false, bool isActive = true)
     {
         UserId = userId;
         Name = name;
