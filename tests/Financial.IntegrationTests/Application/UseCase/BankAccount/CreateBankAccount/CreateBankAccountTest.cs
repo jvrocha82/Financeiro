@@ -1,4 +1,6 @@
-﻿using Financial.Infra.Data.EF;
+﻿using Financial.Application.UseCases.BankAccount.CreateBankAccount;
+using Financial.Domain.Exceptions;
+using Financial.Infra.Data.EF;
 using Financial.Infra.Data.EF.Repositories;
 using FluentAssertions;
 using Xunit;
@@ -43,5 +45,32 @@ public class CreateBankAccountTest
         (output.Id != Guid.Empty).Should().BeTrue();
         (output.CreatedAt != default).Should().BeTrue();
 
+    }
+
+    [Theory(DisplayName = nameof(ThrowWhenCantInstantiateBankAccount))]
+    [Trait("Integration/Application", "CreateBankAccount - Use Cases")]
+    [MemberData(
+       nameof(CreateBankAccountTestDataGenerator.GetInvalidInputs),
+       parameters: 6,
+       MemberType = typeof(CreateBankAccountTestDataGenerator)
+       )]
+    public async void ThrowWhenCantInstantiateBankAccount(
+        CreateBankAccountInput input,
+        string expectedExceptionMessage)
+    {
+        FinancialDbContext dbContext = _fixture.CreateDbContext();
+        var repository = new BankAccountRepository(dbContext);
+        var unitOfWork = new UnitOfWork(dbContext);
+
+        var useCase = new ApplicationUseCases.CreateBankAccount(
+            repository, unitOfWork
+            );
+
+        var task = async ()
+            => await useCase.Handle(input, CancellationToken.None);
+
+        await task.Should().ThrowAsync<EntityValidationException>()
+            .WithMessage(expectedExceptionMessage);
+  
     }
 }

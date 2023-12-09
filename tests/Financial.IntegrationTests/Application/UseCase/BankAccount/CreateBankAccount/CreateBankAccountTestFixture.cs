@@ -16,4 +16,27 @@ public class CreateBankAccountTestFixture
         var bankAccount = GetExampleBankAccount();
         return new CreateBankAccountInput(bankAccount.UserId, bankAccount.Name, bankAccount.OpeningBalance);
     }
+
+    public CreateBankAccountInput GetInvalidInputShortName()
+    {
+        var invalidInputShortName = GetInput();
+        invalidInputShortName.Name = invalidInputShortName.Name[..2];
+
+        return invalidInputShortName;
+
+    }
+    public CreateBankAccountInput GetInvalidInputLongName()
+    {
+        var invalidInputTooLongName = GetInput();
+        invalidInputTooLongName.Name = Faker.Lorem.Letter(256);
+        return invalidInputTooLongName;
+    }
+    public CreateBankAccountInput GetInvalidInputWithNegativeOpeningBalance()
+    {
+
+        var invalidInputNegativeOpeningBalance = GetInput();
+        invalidInputNegativeOpeningBalance.OpeningBalance *= -1;
+        return invalidInputNegativeOpeningBalance;
+    }
+
 }

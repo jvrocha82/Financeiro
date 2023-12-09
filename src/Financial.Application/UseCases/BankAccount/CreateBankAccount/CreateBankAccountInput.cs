@@ -9,7 +9,7 @@ public class CreateBankAccountInput : IRequest<BankAccountModelOutput>
     public string Name { get; set; }
     public bool IsActive { get; set; }
     public bool OpeningBalanceIsNegative { get; set; }
-    public CreateBankAccountInput(Guid userId, string name, decimal openingBalance, bool openingBalanceIsNegative = false, bool isActive = true)
+    public CreateBankAccountInput(Guid userId, string name, decimal openingBalance = 0, bool openingBalanceIsNegative = false, bool isActive = true)
     {
         UserId = userId;
         Name = name;

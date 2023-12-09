@@ -32,4 +32,5 @@ public class BankAccountUseCaseBaseFixture
   => Enumerable.Range(1, length)
         .Select(_ => GetExampleBankAccount())
         .ToList();
+
 }
