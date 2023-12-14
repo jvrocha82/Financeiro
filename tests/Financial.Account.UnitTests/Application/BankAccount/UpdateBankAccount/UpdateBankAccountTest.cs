@@ -97,7 +97,7 @@ public class UpdateBankAccountTest
 
     }
 
-    [Theory(DisplayName = nameof(UpdateBankAccount))]
+    [Theory(DisplayName = nameof(UpdateBankAccountWhithoutProvidingIsActive))]
     [Trait("Application", "UpdateBankAccount - Use Cases")]
     [MemberData(
        nameof(UpdateBankAccountTestDataGenerator.GetBankAccountToUpdate),
