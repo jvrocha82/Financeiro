@@ -1,5 +1,4 @@
 ﻿using Financial.Application.Exceptions;
-using Financial.Application.UseCases.BankAccount.Common;
 using Financial.Application.UseCases.BankAccount.UpdateBankAccount;
 using Financial.Domain.Exceptions;
 using Financial.Infra.Data.EF;
